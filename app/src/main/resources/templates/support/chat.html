@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>1:1 채팅</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_header.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_footer.css}">
+	<link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+	<style>
+		.tabs.is-toggle li.is-active a {
+			background-color:#fff;
+			border:0;
+			border-bottom:3px solid #000;
+			color:#000;
+			font-weight:bold;
+			border-radius:0;
+		}
+
+        .tabs.is-toggle a {
+            border:0;
+            border-radius:0;
+        }
+
+		.tabs.is-toggle li:last-child a, .tabs.is-toggle li:first-child a {
+			border-radius:0;
+		}
+
+		.table thead th {
+		    padding: 21px 10px !important;
+		}
+
+		.table tbody td, .table thead th {
+			border-width: 0 0 1px;
+		}
+		.box {
+            border-radius:0 !important;
+        }
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="common/header :: header"></th:block>
+	<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; border-bottom:1px solid #dbdbdb; margin-top:82px;" class="box has-text-centered">
+		<p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">1:1채팅</p>
+
+		<div class="container tabs is-toggle is-fullwidth is-centered">
+			<ul style="font-size:20px;">
+				<li><a th:href="@{/support/list}">고객센터</a></li>
+				<li><a th:href="@{/support/notice/list}">공지사항</a></li>
+				<li><a th:href="@{/support/qna/form}">Q&A</a></li>
+				<li class="is-active"><a th:href="@{/support/chat}">1:1채팅</a></li>
+			</ul>
+		</div>
+	</div>
+	<section  class="section">
+		<div class="container">
+			<div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 1rem;">
+				<div th:each="msg : ${messages}">
+					<strong th:text="${msg.sender}"></strong>: <span th:text="${msg.content}"></span>
+				</div>
+			</div>
+			<div class="field mt-4">
+				<div class="control">
+					<input class="input" type="text" id="sender" placeholder="Your name">
+				</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<input class="input" type="text" id="message" placeholder="Type a message">
+				</div>
+			</div>
+			<div class="field">
+				<div class="control">
+					<button class="button is-link" onclick="sendMessage()">Send</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+		const socket = new WebSocket("ws://" + location.host + "/chat-websocket");
+		const chatBox = document.getElementById("chat-box");
+		socket.onmessage = function (event) {
+			const msg = JSON.parse(event.data);
+			const div = document.createElement("div");
+			div.innerHTML = `<strong>${msg.sender}</strong>: ${msg.content}`;
+			chatBox.appendChild(div);
+			chatBox.scrollTop = chatBox.scrollHeight;
+		}
+		function sendMessage() {
+			const sender = document.getElementById("sender").value;
+			const content = document.getElementById("message").value;
+			if (sender && content) {
+				socket.send(JSON.stringify({sender: sender, content: content}));
+				document.getElementById("message").value = "";
+			}
+		}
+	</script>
+	<th:block th:replace="common/footer :: footer"></th:block>
+</body>
+
+</html>

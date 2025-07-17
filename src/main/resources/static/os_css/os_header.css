@@ -1,0 +1,349 @@
+/* 기본 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  background: none;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+  
+      padding-top: var(--header-height);
+      
+}
+.global-wrap,
+.main-banner,
+.banner-wrap {
+  background: none !important;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: transparent;
+  transition: background-color 0.55s, top 0.2s;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75), transparent);
+}
+
+header .nav-link {
+  color: #fff; /* 배경 투명일 때 흰색 텍스트 */
+  transition: color 0.3s ease;
+}
+
+header:hover {
+  background-color: white;
+}
+
+header:hover .nav-link {
+  color: #888; /* 호버 시 회색 텍스트 */
+}
+
+/* 상단 배너 */
+.top-banner {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  padding: 6px 0;
+  width: 100%;
+  height: 32px;
+  
+
+}
+:root {
+  --header-height: 0px;  /* 실제 .os-header 높이에 맞춰서 조정하세요 */
+}
+/* 헤더 */
+.os-header {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  z-index: 1000;           /* 헤더가 슬라이더보다 위에 있도록 */
+  background-color: transparent; /* 초기엔 투명 */
+  /* transition: background-color 0.3s ease; */
+}
+.os-header.active {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.os-header.active .nav-link {
+  color: #111 !important;
+}
+.mySwiper {
+  margin-top: calc(-1 * var(--header-height)); /* 헤더 높이만큼 위로 당기기 */
+  position: relative; 
+  z-index: 0;        /* 헤더(z-index:1000)보다 아래에 있도록 */
+}
+.os-header.active {
+  background-color: #fff !important; 
+}
+
+
+
+
+
+
+.os-logo {
+  margin-right: 100px; /* 원본 사이트처럼 띄우고 싶으면 30~60px 사이 추천 */
+}
+.os-header-inner {
+height: 70px;
+  padding: 25px 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+}
+
+.os-logo img {
+  height: 28px;
+}
+
+/* 메뉴 */
+.os-nav .main-menu {
+  display: flex;
+  list-style: none;
+  gap: 50px;
+  font-size: 15px;
+  
+}
+
+.main-menu > li {
+  position: relative;
+}
+
+.main-menu > li > a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  font-size: 17px;
+  
+}
+
+/* 오른쪽 아이콘 */
+.os-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  
+}
+
+.os-right img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.os-right a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #111;
+}
+
+/* 서브 메뉴 */
+.navsub {
+  display: none;
+  position: fixed;
+  top: 102px; /* 헤더를 가리지 않도록 아래로 */
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #f9f9f9;
+  padding: 20px 40px;
+  z-index: 400; /* 헤더 아래로 */
+  
+  
+}
+
+.navsub ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.navsub ul li {
+  margin: 5px 0;
+}
+
+.navsub .menu-title {
+  font-weight: bold;
+  color: #008542;
+}
+
+.navsub ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+/* 메인 배너 */
+.main-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.main-banner img {
+  max-width: 100%;
+  height: auto;
+}
+
+.nav-box {
+  display: flex;
+  gap: 00px; /* ul들 사이 간격 */
+  width: 500px;
+  height: 400px;
+  padding: 35px 20px;
+  box-sizing: border-box;
+  margin-left: 270px; 
+  line-height: 2.2;
+  transform: translateY(-20px); /* ✅ 글씨 시작점 정밀 이동 */
+
+}
+.nav-box ul li a {
+  font-size: 14px;
+  color: #333;
+
+}
+.global-wrap {
+  width: 100%;
+  background: transparent !important;
+}
+.nav-box ul {
+  width: 33.333%; /* 각 열 동일한 넓이 확보 */
+}
+.nav-box-brand {
+  display: flex;
+  justify-content: space-between; /* ← 항목들 간격 균등 배치 */
+  box-sizing: border-box;
+  width: 650px;
+  height: 400px;
+  padding: 35px 20px;
+  margin-left: 290px; 
+  list-style: none;
+  transform: translateY(-20px); /* ✅ 글씨 시작점 정밀 이동 */
+}
+
+.nav-box-brand li {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nav-box-brand li a {
+  text-decoration: none;
+  color: #111;
+
+}
+
+
+
+
+/* 배너 */
+swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  /* background: #fff; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+swiper-container::part(button-next),
+swiper-container::part(button-prev) {
+  color: #999; /* 원하는 색으로 */
+  top: 50%;
+  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  opacity: 0.7;
+  text-shadow: none;
+}
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 배너이미지 텍스트 */
+.banner-wrap {
+  position: relative;
+  width: 100%;
+
+  overflow: hidden;
+  padding-top: 0px;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+  display: block;
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  color: #111;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  z-index: 10;
+  text-align: left;
+}
+
+.banner-text .date {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.banner-text h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+.banner-text p {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.banner-text a {
+  font-size: 14px;
+  color: #333;
+  text-decoration: underline;
+}
+.point {
+  position: relative;
+  display: inline-block;
+}
+
+.point::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  top: -1px;
+  right: -4px;
+  background: #ff5a5f; /* 또는 var(--accentColor) */
+  border-radius: 50%;
+  display: block;
+}

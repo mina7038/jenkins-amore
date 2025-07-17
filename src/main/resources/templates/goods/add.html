@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common/head :: head(title='상품 등록')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div class="container mt-5" style="max-width: 800px;">
+	<h2 class="mb-4">상품 등록</h2>
+	<form th:action="@{/goods/add}" method="post" enctype="multipart/form-data" th:object="${goods}">
+
+		<div class="mb-3">
+			<label for="brand" class="form-label">브랜드</label>
+			<select id="brand" class="form-select" th:field="*{brand}">
+				<option value="">-- 브랜드 선택 --</option>
+				<option value="설화수">설화수</option>
+				<option value="아윤채">아윤채</option>
+				<option value="일리윤">일리윤</option>
+				<option value="오설록">오설록</option>
+			</select>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">상품명</label>
+			<input type="text" class="form-control" th:field="*{gname}" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">정가</label>
+			<input type="number" class="form-control" th:field="*{price1}" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">할인율</label>
+			<input type="number" class="form-control" th:field="*{discount}" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">판매가</label>
+			<input type="number" class="form-control" th:field="*{price2}" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">상품 설명</label>
+			<textarea class="form-control" rows="4" th:field="*{comment}" required></textarea>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">대표 이미지</label>
+			<input type="file" class="form-control" name="img1file" required>
+		</div>
+
+		<div class="mb-3">
+			<label class="form-label">상세 이미지</label>
+			<input type="file" class="form-control" name="img2file" required>
+		</div>
+
+		<div class="d-grid">
+			<button type="submit" class="btn btn-dark">등록</button>
+		</div>
+	</form>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

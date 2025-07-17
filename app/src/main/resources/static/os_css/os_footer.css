@@ -1,0 +1,189 @@
+.footer-top {
+	margin: 0 auto;
+	width: 100%;
+	min-height: 233px;
+	background-color: rgb(0, 128, 192);
+	display: flex !important;
+	 justify-content: space-between;
+	 align-items: flex-start;
+	 flex-wrap: nowrap;
+}
+
+.footer-bottom {
+	width: 100%;
+	min-height: 133px;
+	display: flex;              /* 🔥 다시 flex 적용 */
+	  align-items: flex-start; 
+	padding: 0px 60px 104px;
+	background: #fff;
+
+}
+
+.bottom-left {
+	max-width: 1280px;
+	padding: 20px;
+	
+
+}
+.bottom-left a {
+  text-decoration: none;
+  color: inherit; /* 원하면 기본 글씨 색 유지 */
+}
+
+.bottom-left ul {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	list-style: none;
+
+}
+.business-link {
+  color: #000;
+  font-weight: 500;
+  font-size: 12px;
+  text-decoration: underline !important;  /* 🔥 우선순위 강제 */
+  text-underline-offset: 2px;             /* 밑줄 아래 살짝 띄움 */
+}
+
+.bottom-left li:after {
+	position: absolute;
+	top: 6px;
+	right: 0;
+	content: "";
+	display: block;
+	width: 1px;
+	height: 8px;
+	background: #000;
+}
+
+.bottom-adress {
+	display: block;
+	margin-top: 9px;
+	font-size: 11px;
+	word-break: keep-all;
+	line-height: 2
+	;
+	gap: 16px 400px;  /* row-gap, column-gap 순 */
+}
+.escrow-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-left: auto;
+  float:right;
+  margin-top:10px;
+}
+
+.escrow-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 350px;
+}
+
+
+.escrow-img {
+  width: 50px;
+  height: auto;
+}
+
+.escrow-text p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.8;
+}
+
+.escrow-text p:first-child {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6px;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 60px;
+  background: #f9f9f9;
+  gap: 40px;
+}
+
+.footerbox1 img {
+  width: 200px;
+  height: auto;
+}
+
+.footerbox1 {
+  flex-shrink: 0;
+}
+
+.footerbox2 {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top:30px;
+}
+
+.footer-info {
+  display: flex;
+  gap: 40px;
+  flex: 3;
+  flex-wrap: wrap;
+  line-height: 2.4;
+}
+
+.info-col {
+  min-width: 160px;
+  font-size: 13px;
+  color: #111;
+  line-height: 1.8;
+}
+.info-col img {
+  width: 10px;
+  height: 10px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.info-col h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-notice {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+  font-size: 13px;
+  width: 390px;
+ max-height: 200px;
+  float: right;
+  margin-left: auto;
+}
+
+.footer-notice h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px;
+}
+
+.footer-notice ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-notice li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.footer-notice a {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #555;
+  text-decoration: none;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{common/head :: head(title='리뷰 작성')}"></head>
+
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div class="container mt-5" style="max-width: 800px;">
+	<h2 class="text-center mb-4">리뷰 작성</h2>
+
+	<form th:action="@{/reviews}" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="orderId" th:value="${orderId}" />
+		<input type="hidden" name="goodsNo" th:value="${goodsNo}" />
+
+		<table class="table align-middle">
+			<tbody>
+			<tr>
+				<th style="width: 150px; vertical-align:middle; border:0;">제목</th>
+				<td style=" border:0;">
+					<input type="text" name="title" class="form-control" required />
+				</td>
+			</tr>
+			<tr>
+				<th style=" vertical-align:middle; border:0;">내용</th>
+				<td style=" border:0;">
+					<textarea name="content" rows="5" class="form-control" required></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th style=" vertical-align:middle; border:0;">별점</th>
+				<td style=" border:0;">
+					<select name="rating" class="form-select">
+						<option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+						<option value="4">⭐️⭐️⭐️⭐️</option>
+						<option value="3">⭐️⭐️⭐️</option>
+						<option value="2">⭐️⭐️</option>
+						<option value="1">⭐️</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th style=" vertical-align:middle;">이미지 업로드</th>
+				<td style=" border:0;">
+					<input type="file" name="image" class="form-control" accept="image/*" />
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<div class="text-center mt-4">
+			<button style="width:200px; height:54px;" type="submit" class="btn btn-dark">리뷰 등록</button>
+		</div>
+	</form>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

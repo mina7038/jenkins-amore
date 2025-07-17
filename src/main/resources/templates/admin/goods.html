@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #343a40;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 20px 10px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 30px;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h4 class="text-white ps-2 mb-4">관리자</h4>
+    <a href="/admin">대시보드</a>
+    <a href="/admin/notices">공지사항</a>
+    <a href="/admin/members">회원</a>
+    <a href="/admin/goods" class="bg-primary">상품</a>
+    <a href="/admin/orders">주문</a>
+    <a href="/admin/reviews">리뷰</a>
+    <a href="/admin/qna">Q&A</a>
+
+    <hr class="bg-light">
+    <a href="/" class="bg-light text-dark fw-bold">메인으로</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="d-flex justify-content-between mb-4">
+        <h2 style="margin:0;">상품 관리</h2>
+        <div style="display:flex;">
+            <!-- 🔍 상품 검색 폼 -->
+            <form th:action="@{/admin/goods}" method="get" class="d-flex" style="margin-right:10px; border-bottom:2px solid #000;">
+                <div class="control" style="margin-right:3px;">
+                    <input style="border:0; box-shadow:none; padding:5px; height:30px;" class="input" type="text" name="keyword" placeholder="상품명 검색"
+                           th:value="${keyword != null} ? ${keyword} : ''">
+                </div>
+                <div class="control">
+                    <button type="submit" style="background-color:#fff; border:0;">
+                        <img src="/ap_img/icon_search_bar.png">
+                    </button>
+                </div>
+            </form>
+            <a class="btn btn-dark" href="/goods/add">상품등록</a>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>번호</th>
+            <th>이미지</th>
+            <th>상품명</th>
+            <th>브랜드</th>
+            <th>정가</th>
+            <th>할인가</th>
+            <th>상태</th>
+            <th>관리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="goods : ${goodsPage.content}">
+            <td style="vertical-align:middle;" th:text="${goods.no}">1</td>
+            <td style="vertical-align:middle;"><img th:src="@{'/uploads/' + ${goods.img1}}" alt="상품 이미지" width="60"></td>
+            <td style="vertical-align:middle;" th:text="${goods.gname}">상품명</td>
+            <td style="vertical-align:middle;" th:text="${goods.brand}">브랜드</td>
+            <td style="vertical-align:middle;" th:text="${#numbers.formatInteger(goods.price1, 3, 'COMMA') + '원'}">0원</td>
+            <td style="vertical-align:middle;" th:text="${#numbers.formatInteger(goods.price2, 3, 'COMMA') + '원'}">0원</td>
+            <td style="vertical-align:middle;">
+                <span th:if="${!goods.deleted}" class="badge bg-success">정상</span>
+                <span th:if="${goods.deleted}" class="badge bg-secondary">숨김</span>
+            </td>
+            <td style="vertical-align:middle;">
+                <a class="btn btn-sm btn-primary" th:href="@{/goods/detail/{no}(no=${goods.no})}">상세</a>
+                <a class="btn btn-sm btn-secondary" th:href="@{'/goods/edit/' + ${goods.no}}">수정</a>
+                <form th:action="@{'/goods/delete/' + ${goods.no}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('삭제하시겠습니까?')">
+                        숨김
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav th:if="${totalPages > 0}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/admin/goods(page=${currentPage - 1}, keyword=${keyword})}">이전</a>
+            </li>
+
+            <li class="page-item"
+                th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link"
+                   th:href="@{/admin/goods(page=${i}, keyword=${keyword})}"
+                   th:text="${i + 1}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/admin/goods(page=${currentPage + 1}, keyword=${keyword})}">다음</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

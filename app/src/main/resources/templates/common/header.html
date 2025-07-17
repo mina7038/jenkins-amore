@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>header</title>
+	<style>
+
+
+
+	</style>
+</head>
+
+<body>
+
+	<header id="header" class="header" th:fragment="header">
+		<div class="header_middle">
+			<div class="header_middle_container">
+				<div style="display:flex;">
+				<button type="button" class="burger_btn" id="sidebarToggle" style="cursor: pointer;">
+						<span class="burger_wrap">
+							<span style="margin-top:0;" class="burger_bar top_bar"></span>
+							<span class="burger_bar middle_bar"></span>
+							<span class="burger_bar bottom_bar"></span>
+						</span>
+				</button>
+				<nav class="main-menu-nav" style="padding: 21px 30px;">
+					<ul style="list-style: none; margin: 0; padding: 0; display: flex; gap: 30px;">
+						<li class="menu-item">
+							<a href="/goods/list" class="top-menu">SHOP</a>
+							<ul class="submenu">
+								<li><a class="aa" href="/goods/list?brand=설화수">설화수</a></li>
+								<li><a class="aa" href="/goods/list?brand=아윤채">아윤채</a></li>
+								<li><a class="aa" href="/goods/list?brand=일리윤">일리윤</a></li>
+								<li><a class="aa" href="/goods/list?brand=오설록">오설록</a></li>
+							</ul>
+						</li>
+						<li class="menu-item">
+							<a href="#" class="top-menu">커뮤니티</a>
+							<ul class="submenu">
+								<li><a class="aa" href="/reviews/all">리뷰</a></li>
+							</ul>
+						</li>
+						<li class="menu-item"><a href="/support/list" class="top-menu">고객센터</a>
+							<ul class="submenu">
+								<li><a class="aa" href="/support/notice/list">공지사항</a></li>
+								<li><a class="aa" href="/support/qna/list">1:1문의</a>
+								<li><a class="aa" href="/support/chat">1:1채팅</a></li>
+
+							</ul>
+						</li>
+					</ul>
+				</nav>
+				</div>
+				<!-- ✅ 왼쪽 슬라이드 사이드바 -->
+				<div id="mobileDropdown" class="mobile-dropdown-menu"
+					 style="position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: #fff; transform: translateX(-100%); transition: transform 0.3s ease; z-index: 2000; display: flex; flex-direction: column;">
+
+
+						<div style="border-bottom: 10px solid #f9f9f9; padding:20px;">
+							<div th:if="${session.loginmember == null}" style="color:#707070; margin: 0 0 10px;font-size: 13.5px;line-height: 1.4;letter-spacing: -1px;" class="xans-element- xans-layout xans-layout-footer membership__txt "><!-- 쇼핑몰 이름 : 쇼핑몰 관리자 페이지에서 설정하신 상호명과 자동 연동 됩니다. -->
+								<span class="company-name" data-chk="">아모레퍼시픽</span>
+								<!-- 내용 작성란 -->
+
+								의 다양한 멤버십 혜택을
+								<br>
+								누려보세요.
+
+							</div>
+							<div th:if="${session.loginmember != null}" style="color:#707070; margin: 0 0 10px;font-size: 13.5px;line-height: 1.4;letter-spacing: -1px;" class="xans-element- xans-layout xans-layout-footer membership__txt ">
+								<span class="company-name" data-chk="">오늘 하루도 행복한 하루 되세요.</span>
+							</div>
+							<p style="font-weight:bold; font-size:20px; margin:0;" th:if="${session.loginmember == null}">
+								<a style="display:block;" class="membership__main flex flex--v-center " href="/member/login">로그인<span class="membership__arrow"></span></a>
+							</p>
+							<p style="font-weight:bold; font-size:20px; color:#000; margin:0;" th:if="${session.loginmember != null}">
+								<span th:text="${session.loginmember.name}">김미나</span><span>님</span>
+							</p>
+						</div>
+
+
+						<div style="flex: 1; display: flex; flex-direction: column;">
+							<!-- 상단 메뉴 영역 -->
+							<div>
+								<details class="menu-details" style="color:#000; border-bottom:1px solid #eee;">
+									<summary class="menu-summary">
+										<span>SHOP</span>
+										<span class="arrow-wrapper">
+										  <img src="/ap_img/icon_arrow_down.svg" class="arrow-icon" alt="">
+										</span>
+									</summary>
+									<ul style="padding:15px; margin:0; background:#f9f9f9;">
+										<li style="margin-bottom:5px;"><a style="color:#333;" href="/goods/list">전체</a></li>
+										<li style="margin-bottom:5px;"><a style="color:#333;" href="/goods/list?brand=설화수">설화수</a></li>
+										<li style="margin-bottom:5px;"><a style="color:#333;" href="/goods/list?brand=아윤채">아윤채</a></li>
+										<li style="margin-bottom:5px;"><a style="color:#333;" href="/goods/list?brand=일리윤">일리윤</a></li>
+										<li style="margin-bottom:5px;"><a style="color:#333;" href="/goods/list?brand=오설록">오설록</a></li>
+									</ul>
+								</details>
+
+								<details class="menu-details" style="color:#000; border-bottom:1px solid #eee;">
+									<summary class="menu-summary">
+										<span>커뮤니티</span>
+										<span class="arrow-wrapper">
+										  <img src="/ap_img/icon_arrow_down.svg" class="arrow-icon" alt="">
+										</span>
+									</summary>
+									<ul style="padding:15px; margin:0; background:#f9f9f9;">
+										<li style="margin-bottom:5px;">
+											<a style="color:#333;" href="/reviews/all">리뷰</a>
+										</li>
+									</ul>
+								</details>
+								<details class="menu-details" style="border-bottom:1px solid #eee;">
+									<summary class="menu-summary">
+										<span>고객센터</span>
+										<div class="arrow-wrapper">
+											<img src="/ap_img/icon_arrow_down.svg" class="arrow-icon" alt="화살표" />
+										</div>
+									</summary>
+									<ul style="padding:15px; margin:0; background:#f9f9f9;">
+										<li style="margin-bottom:5px;"><a href="/support/list">고객센터</a></li>
+										<li style="margin-bottom:5px;"><a href="/support/notice/list">공지사항</a></li>
+										<li><a href="/support/qna/form">1:1 문의</a></li>
+									</ul>
+								</details>
+							</div>
+
+
+							<!-- 하단 고정 영역 -->
+							<div style="margin-top: auto; font-size: 14px; padding:15px;">
+								<a style="text-decoration:underline;" th:if="${session.loginmember == null}" href="/member/join/step1">Join</a>
+								<a style="text-decoration:underline;" th:if="${session.loginmember != null and session.loginmember.role != 'ROLE_ADMIN'}" href="/member/mypage">My Page</a>
+								<a style="text-decoration:underline;"  href="/admin" th:if="${session.loginmember != null and session.loginmember.role == 'ROLE_ADMIN'}">Admin</a>
+								<span th:if="${session.loginmember != null}"> / </span>
+								<a style="text-decoration:underline;" th:if="${session.loginmember != null}" href="/member/logout">Logout</a>
+							</div>
+						</div>
+
+				</div>
+				<div class="logo">
+					<div style="" class="current_logo">
+						<a style="display:block;" href="/">
+							<img src="/ap_img/amorepacific.png" alt="아모레퍼시픽 로고" style="width:200px;">
+						</a>
+					</div>
+				</div>
+				<div class="logo-black">
+					<div style="" class="current_logo">
+						<a style="display:block;" href="/">
+							<img src="/ap_img/login-logo.png" alt="아모레퍼시픽 로고" style="width:200px;">
+						</a>
+					</div>
+				</div>
+				<div class="cs_menu_wrap">
+					<ul class="cs_menu" style="margin:0; padding:0;">
+						<li style="padding:0;" th:if="${session.loginmember == null}" class="login hide"><a style="text-decoration:none;" href="/member/login">Login</a></li>
+						<li class=" hide" style="padding:0;" th:if="${session.loginmember != null and session.loginmember.role == 'ROLE_ADMIN'}">
+							<a href="/admin">Admin</a>
+						</li>
+						<li class=" hide" style="padding:0;" th:if="${session.loginmember != null and session.loginmember.role != 'ROLE_ADMIN'}"><a href="/member/mypage" class="xans-element- xans-layout xans-layout-statelogon ">my page</a>
+						<li class="login hide">/</li>
+						<li class=" hide" style="padding:0;" th:if="${session.loginmember == null}"><a style="text-decoration:none;" href="/member/join/step1">Join</a></li>
+						<li style="padding:0;" th:if="${session.loginmember != null}" class="login hide"><a style="text-decoration:none;" href="/member/logout">Logout</a></li>
+
+						<li th:if="${session.loginmember == null or session.loginmember.role != 'ROLE_ADMIN'}">
+							<a class="cart-white" href="/cart/list">
+								<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M8.737 7c.36-2.005 1.776-3.35 3.263-3.35 1.487 0 2.903 1.345 3.263 3.35H8.737zM7.424 7C7.804 4.45 9.61 2.35 12 2.35c2.39 0 4.196 2.1 4.576 4.65H18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1.424zM6.3 17.7V8.3h11.4v9.4H6.3z" fill="#fff"></path>
+								</svg>
+							</a>
+							<a class="cart-black" href="/cart/list">
+								<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd" d="M8.737 7c.36-2.005 1.776-3.35 3.263-3.35 1.487 0 2.903 1.345 3.263 3.35H8.737zM7.424 7C7.804 4.45 9.61 2.35 12 2.35c2.39 0 4.196 2.1 4.576 4.65H18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1.424zM6.3 17.7V8.3h11.4v9.4H6.3z" fill="#000"></path>
+								</svg>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+              const sidebar = document.getElementById("mobileDropdown");
+              const toggleBtn = document.getElementById("sidebarToggle");
+
+              toggleBtn.addEventListener("click", function () {
+                const isOpen = sidebar.style.transform === "translateX(0%)";
+                sidebar.style.transform = isOpen ? "translateX(-100%)" : "translateX(0%)";
+              });
+
+              // 바깥 클릭 시 닫기 (선택)
+              document.addEventListener("click", function (e) {
+                if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                  sidebar.style.transform = "translateX(-100%)";
+                }
+              });
+            });
+		</script>
+
+
+	</header>
+</body>
+
+</html>

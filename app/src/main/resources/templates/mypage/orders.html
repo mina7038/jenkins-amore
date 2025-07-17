@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='주문 내역')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; margin-top:82px;" class="box has-text-centered">
+  <p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">주문 조회</p>
+  <div class="container">
+  <h3 style="text-align:left; font-weight:bold; font-size:20px; padding-bottom:10px; border-bottom:2px solid #000; margin:0;">주문 상품 정보</h3>
+
+  <div th:if="${orders.isEmpty()}">
+    <div class="has-text-centered">
+      주문 내역이 없습니다.
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;" th:unless="${orders.isEmpty()}">
+    <table class="table is-fullwidth">
+      <thead style="border:0;">
+        <tr style="border:0;">
+          <th style="text-align:center;vertical-align:middle; padding:15px; border-bottom:1px solid #dbdbdb;">주문일자<br>[주문번호]</th>
+          <th style="text-align:center;vertical-align:middle; padding:15px; white-space:nowrap; border-bottom:1px solid #dbdbdb;">상품명</th>
+          <th style="text-align:center;vertical-align:middle; padding:15px; white-space:nowrap; border-bottom:1px solid #dbdbdb;">수량</th>
+          <th style="text-align:center;vertical-align:middle; padding:15px; white-space:nowrap; border-bottom:1px solid #dbdbdb;">결제금액</th>
+          <th style="text-align:center;vertical-align:middle; padding:15px; border-bottom:1px solid #dbdbdb;">상태</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="order : ${orders}">
+          <td style="vertical-align:middle; padding:15px;">
+            <p style="margin:0;" th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd')}">2025-07-02</p>
+            <a th:href="@{/orders/detail/{id}(id=${order.id})}" style="text-decoration: none; color: inherit;">
+              <p style="margin:0; text-decoration:underline;" th:text="'[' + ${order.orderId} + ']'">[ORDER_123456]</p>
+            </a>
+          </td>
+          <td style="vertical-align:middle; padding:15px; white-space:nowrap; text-align:left;">
+            <a th:href="@{/orders/detail/{id}(id=${order.id})}" style="text-decoration: none; color: inherit; font-size: 15px; ">
+              <span th:each="item, stat : ${order.items}" th:if="${stat.index == 0}" th:text="${item.goods.gname}">상품명</span>
+              <span th:if="${order.items.size() > 1}"> 외 <span th:text="${order.items.size() - 1}"></span>건</span>
+            </a>
+          </td>
+          <td style="vertical-align:middle; padding:15px;" th:text="${#numbers.formatInteger(order.totalQuantity, 0)}">1</td>
+          <td style="vertical-align:middle; padding:15px; white-space:nowrap;" th:text="|${#numbers.formatInteger(order.totalAmount, 0, 'COMMA')}원|">27,000원</td>
+          <td style="vertical-align:middle; padding:15px;">
+            <span th:switch="${#strings.trim(order.status)}">
+              <span th:case="'READY'" class="tag is-warning">결제 대기</span>
+              <span th:case="'PAID'" class="tag is-success">결제 완료</span>
+              <span th:case="'CANCELLED'" class="tag is-light">취소됨</span>
+              <span th:case="'FAILED'" class="tag is-danger">결제 실패</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="buttons is-right mt-4">
+    <a href="/" class="button is-link is-light">메인으로</a>
+  </div>
+  </div>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

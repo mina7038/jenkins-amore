@@ -1,0 +1,186 @@
+<!-- templates/member/step2.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='회원가입')}"></head>
+<body>
+<div th:replace="~{common/header :: header}"></div>
+
+<section class="section" style="padding-top: 100px;">
+    <div class="container" style="max-width: 700px;">
+        <h1 class="title is-3 has-text-centered mb-6">회원정보 입력</h1>
+
+        <form th:action="@{/member/join}" method="post" th:object="${member}" onsubmit="return validateForm()">
+            <div class="field">
+                <label class="label">이름</label>
+                <input class="input" type="text" th:field="*{name}" required>
+            </div>
+
+            <div class="field">
+                <label class="label">아이디</label>
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input style="border-radius:4px;" class="input" type="text" th:field="*{username}" id="username" required>
+                    </div>
+                    <div class="control">
+                        <button type="button" style="height:40px; margin-left:5px; border-radius:4px;" class="btn btn-dark" onclick="checkUsername()">중복확인</button>
+                    </div>
+                </div>
+                <p id="usernameMessage" class="help mt-1"></p>
+            </div>
+
+            <div class="field">
+                <label class="label">비밀번호</label>
+                <input class="input" type="password" th:field="*{password}" id="password" required>
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="field">
+                <label class="label">비밀번호 확인</label>
+                <input class="input" type="password" name="confirmPassword" id="confirmPassword" required>
+                <p id="passwordMessage" class="help mt-1"></p>
+            </div>
+
+            <div class="field">
+                <label class="label">이메일</label>
+                <input class="input" type="email" th:field="*{email}" required>
+            </div>
+
+            <div class="field">
+                <label class="label">연락처</label>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <input style="max-width:100px;" class="input" type="tel" id="tel1" maxlength="3" placeholder="010" required>
+                    </div>
+                    <div class="control">-</div>
+                    <div class="control">
+                        <input style="max-width:100px;" class="input" type="tel" id="tel2" maxlength="4" placeholder="1234" required>
+                    </div>
+                    <div class="control">-</div>
+                    <div class="control">
+                        <input style="max-width:100px;" class="input" type="tel" id="tel3" maxlength="4" placeholder="5678" required>
+                    </div>
+                </div>
+                <!-- 실제 form에 전달할 값 (숨김 처리) -->
+                <input type="hidden" th:field="*{tel}" id="tel" />
+            </div>
+
+            <div class="field">
+                <label class="label">주소</label>
+                <div class="field is-grouped">
+                    <input class="input" type="text" id="postcode" th:field="*{postcode}" placeholder="우편번호" readonly>
+                    <button style="margin-left:5px;" type="button" class="button is-black" onclick="addrCheck()">주소 찾기</button>
+                </div>
+                <input class="input mt-2" type="text" id="address" th:field="*{addr1}" placeholder="기본주소" readonly>
+                <input class="input mt-2" type="text" id="detailAddress" th:field="*{addr2}" placeholder="상세주소">
+            </div>
+
+            <div class="has-text-centered mt-5">
+                <button style="font-size:18px;" type="submit" class="button is-black is-fullwidth is-medium has-text-weight-bold">
+                    회원가입 완료
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    let usernameValid = false;
+
+    function checkUsername() {
+        const username = document.getElementById('username').value;
+        const message = document.getElementById('usernameMessage');
+
+        if (!username) {
+            message.textContent = '아이디를 입력해주세요.';
+            message.className = 'help is-danger';
+            usernameValid = false;
+            return;
+        }
+
+        fetch(`/member/check-username?username=${encodeURIComponent(username)}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data === true) {
+                    message.textContent = '사용 가능한 아이디입니다.';
+                    message.className = 'help is-success';
+                    usernameValid = true;
+                } else {
+                    message.textContent = '이미 사용 중인 아이디입니다.';
+                    message.className = 'help is-danger';
+                    usernameValid = false;
+                }
+            })
+            .catch(() => {
+                message.textContent = '중복 확인 중 오류가 발생했습니다.';
+                message.className = 'help is-danger';
+                usernameValid = false;
+            });
+    }
+</script>
+<script>
+    document.getElementById('confirmPassword').addEventListener('keyup', function () {
+    const pw = document.getElementById('password').value;
+    const confirmPw = this.value;
+    const message = document.getElementById('passwordMessage');
+
+    if (pw && confirmPw) {
+        if (pw === confirmPw) {
+            message.textContent = '비밀번호가 일치합니다.';
+            message.className = 'help is-success';
+        } else {
+            message.textContent = '비밀번호가 일치하지 않습니다.';
+            message.className = 'help is-danger';
+        }
+    } else {
+        message.textContent = '';
+    }
+});
+
+</script>
+
+<script>
+    function validateForm() {
+    if (!usernameValid) {
+        alert("아이디 중복 확인을 완료해주세요.");
+        return false;
+    }
+
+    const pw = document.getElementById('password').value;
+    const confirmPw = document.getElementById('confirmPassword').value;
+    if (pw !== confirmPw) {
+        alert("비밀번호가 일치하지 않습니다.");
+        return false;
+    }
+
+    // ✅ 연락처 합치기
+    const tel1 = document.getElementById("tel1").value.trim();
+    const tel2 = document.getElementById("tel2").value.trim();
+    const tel3 = document.getElementById("tel3").value.trim();
+
+    if (tel1.length !== 3 || tel2.length !== 4 || tel3.length !== 4) {
+        alert("연락처 형식을 확인해주세요. (예: 010-1234-5678)");
+        return false;
+    }
+
+    document.getElementById("tel").value = `${tel1}-${tel2}-${tel3}`;
+    return true;
+}
+</script>
+
+
+<!-- 주소 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function addrCheck() {
+      new daum.Postcode({
+        oncomplete: function(data) {
+          document.getElementById("postcode").value = data.zonecode;
+          document.getElementById("address").value = data.address;
+          document.getElementById("detailAddress").focus();
+        }
+      }).open();
+    }
+</script>
+
+<div th:replace="~{common/footer :: footer}"></div>
+</body>
+</html>

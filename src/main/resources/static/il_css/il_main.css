@@ -1,0 +1,323 @@
+@charset "utf-8";
+
+* {
+	font-family: 'Pretendard-Regular';
+	box-sizing: border-box;
+	letter-spacing: -1px;
+}
+
+a {
+	color: #000;
+}
+
+.detail {
+	padding: 30px 20px;
+	margin: -9px 0 0;
+	word-break: break-all;
+	line-height: normal;
+	min-height: 300px;
+}
+
+#wrap {
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	min-height: 550px;
+	overflow: hidden;
+}
+
+#container {
+	padding-top: 30px !important;
+}
+
+#container {
+	width: 100%;
+	zoom: 1;
+	position: relative;
+	margin: 0 auto;
+}
+
+#container #contents,
+#container #contents>.section {
+	width: 100%;
+	max-width: 1448px;
+	margin: 0 auto;
+}
+
+#container #contents {
+	margin: 0 auto;
+	float: none;
+	padding: 0;
+}
+
+#contents {
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+swiper-slide {
+	cursor: pointer;
+}
+
+swiper-container.mySwiper {
+	width: 100%;
+	height: 750px;
+	display: block;
+}
+
+swiper-slide {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+swiper-slide>div:first-child {
+	width: 100%;
+	height: 100%;
+}
+
+swiper-slide img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.slide_in {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #000;
+	z-index: 2;
+}
+
+#container #contents>.section.sec02 {
+	min-height: 236px;
+	padding-top: 80px;
+}
+
+.sec02 .short-icon-area {
+	display: flex;
+	justify-content: center;
+	gap: 54px;
+}
+
+.sec02 .short-icon-area .morenvy-icon .short-icon-img {
+	max-width: 120px;
+	border-radius: 30px;
+	overflow: hidden;
+}
+
+.sec02 .short-icon-area .morenvy-icon .short-icon-img img {
+	aspect-ratio: 1 / 1;
+}
+
+.sec02 .short-icon-area .morenvy-icon .short-icon-tit {
+	font-size: 20px;
+	font-weight: 600;
+	word-break: keep-all;
+	text-align: center;
+}
+
+.sec02 .short-icon-area .morenvy-icon>a {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.sec02 .short-icon-area .morenvy-icon>a:hover {
+	opacity: 0.8;
+}
+
+@media (max-width: 1440px) {
+	.sec02 .short-icon-area .morenvy-icon .short-icon-img {
+		max-width: clamp(100px, 8.333vw, 120px);
+		border-radius: 32%;
+	}
+}
+
+@media (max-width: 1440px) {
+	.sec02 .short-icon-area .morenvy-icon .short-icon-tit {
+		font-size: clamp(18px, 1.389vw, 20px);
+	}
+}
+
+@media (max-width: 1024px) {
+	.sec02 .short-icon-area {
+		width: 100%;
+		padding: 0 24px;
+		overflow-x: auto;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		gap: clamp(16px, 2.344vw, 24px);
+	}
+}
+
+@media (max-width: 1024px) {
+	.sec02 .short-icon-area .morenvy-icon {
+		width: fit-content;
+	}
+}
+
+@media (max-width: 767px) {
+	.sec02 .short-icon-area {
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 429px) {
+	.sec02 .short-icon-area {
+		padding: 0 16px;
+	}
+}
+
+@media (max-width: 1440px) {
+	.sec02 .short-icon-area .morenvy-icon .short-icon-img {
+		max-width: clamp(100px, 8.333vw, 120px);
+		border-radius: 32%;
+	}
+}
+
+@media (max-width: 1024px) {
+	.sec02 .short-icon-area .morenvy-icon .short-icon-img {
+		min-width: 80px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.slide_in {
+		max-width: calc(100% - 46px);
+		left: 0;
+		top: 26%;
+		transform: translateY(-30%);
+	}
+}
+
+.slide_intext {
+	max-width: 1448px;
+	margin: 0 auto;
+	box-sizing: content-box;
+}
+
+@media (max-width: 1024px) {
+	.slide_intext {
+		padding: 0px;
+	}
+}
+
+@media (max-width: 1600px) {
+	.slide_intext {
+		padding: 0 50px;
+	}
+}
+
+.slide_in h2 {
+	font-size: 50px;
+	margin: 10px 0;
+}
+
+@media (max-width: 1024px) {
+	.slide_in h2 {
+		font-size: clamp(28px, 4.883vw, 50px);
+	}
+}
+
+.slide_in p {
+	font-size: 30px;
+	line-height: 1.5;
+	margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+	.slide_in p {
+		margin-bottom: clamp(15px, 1.953vw, 20px);
+		font-size: clamp(16px, 2.93vw, 30px);
+	}
+}
+
+.slide_in .p2 {
+	font-size: 24px;
+	margin: 30px 0 0 0;
+}
+
+@media (max-width: 1024px) {
+	.slide_in .p2 {
+		margin-top: clamp(15px, 1.953vw, 20px);
+		font-size: clamp(18px, 2.344vw, 24px);
+	}
+}
+
+
+/* 공통 초기 상태 */
+.slide_in p,
+.slide_in h2,
+.slide_in .p2 {
+	opacity: 0;
+	transform: translateY(20px);
+}
+
+/* 애니메이션 실행 */
+.slide_in .animate {
+	animation: slideFadeUp 0.8s ease forwards;
+}
+
+/* 순차 애니메이션 딜레이 */
+.slide_in p.animate {
+	animation-delay: 0.3s;
+}
+
+.slide_in h2.animate {
+	animation-delay: 0.6s;
+}
+
+.slide_in .p2.animate {
+	animation-delay: 0.9s;
+}
+
+@keyframes slideFadeUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* 기본: PC 화면 */
+.pc {
+	display: block;
+}
+
+.mp {
+	display: none;
+}
+
+@media (max-width: 1024px) {
+	swiper-container.mySwiper {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
+	.pc {
+		display: none;
+	}
+
+	.mp {
+		display: block;
+		min-height: 650px;
+		aspect-ratio: 25 / 34;
+	}
+}
+
+@media (max-width: 460px) {
+	.slide_in {
+		top: 28%;
+	}
+}
+
+/*--------------------------------------------*/
+.textarea:not([rows]) {
+	min-height: 300px !important;
+}

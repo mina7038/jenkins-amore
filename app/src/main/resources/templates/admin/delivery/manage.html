@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='배송관리')}"></head>
+<div th:replace="~{common/header}"></div>
+<section class="section">
+  <div class="container">
+    <h1 class="title is-3">🚚 배송 관리</h1>
+
+    <table class="table is-fullwidth is-striped">
+      <thead>
+      <tr>
+        <th>배송번호</th>
+        <th>주문번호</th>
+        <th>수령인</th>
+        <th>주소</th>
+        <th>요청사항</th>
+        <th>상태</th>
+        <th>변경</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="delivery : ${deliveries}">
+        <td th:text="${delivery.id}">1</td>
+        <td th:text="${delivery.payment.orderNo}">ORD2025001</td>
+        <td th:text="${delivery.receiver}">홍길동</td>
+        <td>
+          <span th:text="${delivery.addr1}"></span>
+          <span th:text="${delivery.addr2}"></span>
+          <span th:text="${delivery.postcode}"></span>
+        </td>
+        <td th:text="${delivery.request}">문 앞에 두세요</td>
+        <td>
+          <span class="tag is-info" th:text="${delivery.status}">배송준비</span>
+        </td>
+        <td>
+          <form th:action="@{/admin/delivery/update}" method="post" class="is-flex">
+            <input type="hidden" name="no" th:value="${delivery.id}">
+            <div class="select mr-2">
+              <select name="status">
+                <option>배송준비</option>
+                <option>배송중</option>
+                <option>배송완료</option>
+              </select>
+            </div>
+            <button class="button is-small is-primary">변경</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<html th:replace="~{common/footer}" />

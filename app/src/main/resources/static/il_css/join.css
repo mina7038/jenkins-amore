@@ -1,0 +1,305 @@
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	box-sizing: border-box;
+	letter-spacing: -1px;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+div {
+	display: block;
+}
+
+#wrap {
+	position: relative;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.join_banner {
+	margin-top: 137px;
+	width: 100%;
+	height: 94px;
+	background: #000;
+	color: #fff;
+	text-align: center;
+	padding: 25px 0;
+}
+
+.join_banner_in {
+	max-width: 1000px;
+	height: 69px;
+	margin: 0 auto;
+}
+
+.join_banner h6 {
+	font-size: 18px;
+}
+
+.join_banner p {
+	padding-top: 5px;
+}
+
+.joinbody {
+	width: 100%;
+	height: 100%;
+	background: url("/il_img/cart_bg.png") no-repeat;
+	background-size: cover;
+	background-attrachment: fixed;
+	padding: 70px 0;
+	position: relative;
+}
+
+.joinbox {
+	padding: 50px 250px;
+	max-width: 1000px;
+	margin: auto;
+	background: #Fff;
+}
+
+
+
+.joinTitle h2 {
+	font-size: 36px;
+	line-height: 60px;
+	text-align: center;
+	display: block;
+	padding: 20px 0;
+}
+
+.joinWrap {
+	width: 100%;
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 15px 15px 0 15px;
+}
+
+.inputwrite {
+	border-top: 2px solid #000;
+	padding: 35px 0 20px 0;
+	overflow: hidden;
+}
+
+.joinWrap2 {
+	width: 100%;
+	padding: 15px 15px 0 15px;
+}
+
+.checkAll {
+	width: 100%;
+	height: 45px;
+	border: 1px solid #ddd;
+	text-align: center;
+	line-height: 43px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.check {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	font-size: 15px;
+	gap: 10px;
+}
+
+.check input[type="checkbox"] {
+	display: none;
+	/* 숨기고 커스텀 스타일만 보이게 */
+}
+
+.check .custom-checkbox {
+	width: 20px;
+	height: 20px;
+	background-image: url(/il_img/pcCheckIcon.png);
+	background-size: 20px 40px;
+	background-position: top;
+}
+
+/* 체크되었을 때 배경 변경 */
+.check input[type="checkbox"]:checked+.custom-checkbox {
+	background-position: bottom;
+}
+
+.agreeHint {
+	width: 100%;
+	color: #8d8d8d;
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: 300;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.agreeHint span {
+	display: block;
+	color: #db3a3a;
+	margin-bottom: 3px;
+}
+
+.customCbox {
+	width: 100%;
+	height: 40px;
+	padding: 10px 0;
+	position: relative;
+	line-height: 20px;
+	display: inline-block;
+}
+
+.customCbox input[type='checkbox'],
+.customCbox input[type='radio'] {
+	vertical-align: middle;
+	outline: 0;
+	width: 20px;
+	height: 20px;
+	margin: 0;
+	border: 0;
+	cursor: pointer;
+	-webkit-appearance: none;
+	background-size: 20px 40px;
+	background-image: url(/il_img/pcCheckIcon.png);
+	margin-right: 5px;
+	float: left;
+}
+
+.customCbox input[type='checkbox']:checked,
+.customCbox input[type='radio']:checked {
+	background-position: 0 -20px;
+}
+
+.joinWrap .customCbox a.btnMore {
+	font-size: 20px;
+	position: absolute;
+	right: 0px;
+	display: block;
+	width: 40px;
+	top: 0;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.joinbtn {
+	width: 100%;
+	color: #fff;
+	line-height: 53px;
+	height: 55px;
+	font-size: 18px;
+	font-weight: 400;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: center;
+	border: 1px solid #4e4e56;
+	cursor: pointer;
+
+	/* 배경 그라데이션 */
+	background: linear-gradient(to left, #4e4e56 50%, #000 50%);
+	background-size: 200% 100%;
+	background-position: right bottom;
+	transition: background-position 0.5s ease;
+}
+
+.joinbtn:hover {
+	background-position: left bottom;
+}
+
+
+.agree_text_content {
+	font-size: 14px;
+	line-height: 20px;
+	padding: 20px;
+	color: #555;
+}
+
+.phoneok-wrap .phone_button {
+	display: block;
+	line-height: 68px;
+	text-align: center;
+	border-radius: 5px;
+	background: #fff;
+	border: 1px solid #000;
+	font-size: 20px;
+	color: #111;
+	font-weight: 600;
+	width: 100%;
+	max-width: 500px;
+	padding-left: 25px;
+	box-sizing: border-box;
+	position: relative;
+	margin: 0 auto;
+}
+
+.phone_button:before {
+	content: '';
+	width: 17px;
+	height: 26px;
+	background: url(/il_img/phone.png) no-repeat;
+	position: absolute;
+	top: calc(50% - 13px);
+	margin-left: -28px;
+}
+
+.phone_description {
+	font-size: 14px;
+	color: #4e4e56;
+	line-height: 20px;
+	padding: 15px 0 30px 0;
+	box-sizing: border-box;
+	text-align: center;
+	font-weight: 300;
+}
+
+.phone_description strong {
+	color: #000;
+	font-weight: 500;
+}
+
+.mb-3 {
+	position: relative;
+}
+
+.mb-3 .form-label:after {
+	content: '';
+	width: 6px;
+	height: 6px;
+	position: absolute;
+	background-image: url(/il_img/bg_required.png);
+	margin-left: 4px;
+	top: 15px;
+	background-size: cover;
+
+}
+
+#il_footer {
+	margin-top: 0;
+}
+
+@media(max-width:1024px) {
+	.joinbox {
+		padding: 30px 100px;
+	}
+
+	.mb-3 {
+		max-width: 770px;
+	}
+
+	.join_banner {
+		margin-top: 102.56px;
+	}
+
+}
+
+@media(max-width:859px) {
+	.join_banner {
+		margin-top: 129px;
+	}
+}

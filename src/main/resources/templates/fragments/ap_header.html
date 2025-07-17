@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Page Title</title>
+</head>
+
+<body>
+	<header id="header" class="header" th:fragment="ap_header">
+		<div class="header_top"><a href="#">카카오톡 채널 추가 시 1,000원 추가 할인!</a><a href="#" class="close">하루 동안 보지 않기</a>
+		</div>
+		<div class="header_middle">
+			<div class="header_middle_container">
+				<div class="logo">
+					<div class="current_logo">
+						<a href="/">
+							<img src="/ap_img/logo.webp" alt="아모레퍼시픽 로고" style="width:250px;">
+						</a>
+					</div>
+					<div class="brand_list">
+						<ul>
+							<li class="sulhwasoo" style="width:unset;"><a href="#"><img src="/ap_img/sulwhasoo_logo.png"
+										alt="설화수"></a></li>
+							<li class="ayooncha" style="width:unset;"><a href="#"><img src="/ap_img/ayooncha_logo.png"
+										alt="아윤채"></a></li>
+							<li class="illiyoon" style="width:unset;"><a href="/il"><img src="/ap_img/illiyoon_logo.jpg"
+										alt="일리윤"></a></li>
+							<li class="osulloc" style="width:unset;"><a href="/ap/goods/list"><img src="/ap_img/osulloc_logo.jpg"
+										alt="설화수"></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="cs_menu_wrap">
+					<ul class="cs_menu">
+						<li th:if="${session.aploginMember == null}" class="login"><a href="/ap/member/login">로그인</a></li>
+						<li th:if="${session.aploginMember == null}"><a href="/ap/member/join">회원가입</a></li>
+						<li th:if="${session.aploginMember != null}" class="login"><a href="/ap/member/logout">로그아웃</a></li>
+						<li><a href="/ap/support/list">고객센터</a></li>
+						<li><a href="#">멤버십안내</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="header_bottom">
+			<div class="header_bottom_container">
+				<div class="gnb_wrap">
+					<button type="button" class="burger_btn" style="cursor: pointer;">
+						<span class="burger_wrap">
+							<span class="burger_bar top_bar"></span>
+							<span class="burger_bar middle_bar"></span>
+							<span class="burger_bar bottom_bar"></span>
+						</span>
+						카테고리
+					</button>
+					<nav class="gnb">
+						<ul class="gnb_list">
+							<li class="best"><a href="#">랭킹</a></li>
+							<li><a href="#">이벤트</a></li>
+							<li><a href="#">피부고민별</a></li>
+							<li><a href="#">피부전문가용</a></li>
+							<li><a href="#">공식몰 단독</a></li>
+							<li><a href="#">멤버십/쿠폰</a></li>
+							<li><a href="#">리뷰</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="header_mymenu">
+					<ul>
+						<li><a href="#" id="icon_search"><img src="/ap_img/icon1.png" alt="검색"></a></li>
+						<li><a href="#" class="xans-element- xans-layout xans-layout-statelogon "><img
+									src="/ap_img/icon2.png" alt="마이페이지"></a>
+						</li>
+						<li><a href="/cart/list"><img src="/ap_img/icon3.png" alt="장바구니"></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="sub_menu">
+				<div class="sub_menu_in">
+					<nav class="all_category">
+						<div id="category">
+							<div class="position">
+								<ul>
+									<li><a href="#" class="on">BEST</a></li>
+									<li>
+										<a href="#" class="on">브랜드별</a>
+										<div class="sub-category">
+											<ul>
+												<li><a href="#">설화수</a></li>
+												<li><a href="#">아윤채</a></li>
+												<li><a href="#">일리윤</a></li>
+												<li><a href="#">오설록</a></li>
+											</ul>
+										</div>
+									</li>
+									<li>
+										<a href="#" class="on">이벤트</a>
+										<div class="sub-category">
+											<ul>
+												<li><a href="#">이벤트</a></li>
+												<li><a href="#">공지사항</a></li>
+												<li><a href="#">Q&A</a></li>
+											</ul>
+										</div>
+									</li>
+									<li>
+										<div class="cate_cont">
+											<a href="#">공식판매처 찾기 ></a>
+											<a href="#" class="naos">NAOS AGING SCIENCE ></a>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$('.close').on('click', function (e) {
+					e.preventDefault(); // a 태그의 기본 동작 방지
+					$('.header_top').slideUp(); // 부드럽게 숨김
+				});
+			});
+		</script>
+		<script>
+			$(document).ready(function () {
+				// 기존 close 버튼
+				$('.close').on('click', function (e) {
+					e.preventDefault();
+					$('.header_top').slideUp();
+				});
+
+				// burger_btn 클릭 시 sub_menu 토글
+				$('.burger_btn').on('click', function (e) {
+					e.preventDefault();
+					$('.sub_menu').stop(true, true).slideToggle(300);
+				});
+			});
+		</script>
+
+	</header>
+</body>
+
+</html>

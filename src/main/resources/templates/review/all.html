@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{common/head :: head(title='후기 목록')}"></head>
+<div th:replace="~{common/header}"></div>
+<body>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 40px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .product-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+    }
+    .product-name {
+        font-weight: bold;
+    }
+    .review-content {
+        text-align: left;
+    }
+
+    .pagination {
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.pagination-list {
+    display: flex;
+    gap: 4px;
+}
+
+.pagination-link {
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: #333;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.pagination-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination-link.is-current {
+    font-weight: bold;
+    color: black;
+    background: none;
+}
+
+.pagination-previous,
+.pagination-next {
+    border: none;
+    background: none;
+    font-size: 16px;
+    padding: 4px 8px;
+    color: #333;
+    cursor: pointer;
+}
+
+.pagination-previous:hover,
+.pagination-next:hover {
+    background-color: #f0f0f0;
+}
+</style>
+<p style="margin-top:82px; text-align:center; margin-bottom:50px; font-size:49.5px;" class="title is-3">상품 후기</p>
+<div style="overflow-x:auto;">
+    <table style="min-width:700px; max-width:1200px; margin:0 auto; text-align:center; font-size:15px;">
+        <thead>
+        <tr>
+            <th style="width:10%;">번호</th>
+            <th style="width:20%;">상품명</th>
+            <th style="">제목</th>
+            <th style="width:10%;">작성자</th>
+            <th style="width:10%;">작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review, stat : ${reviewPage.content}">
+            <td th:text="${review.id}" style="vertical-align:middle;">1</td>
+
+            <!-- 상품 이미지와 이름 -->
+            <td style="text-align: center; padding:8px; vertical-align:middle;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <img style="height:50px;" th:src="@{/uploads/{f}(f=${review.goods.img1})}" class="product-img" alt="썸네일"/>
+                    <p style="font-size:10px; letter-spacing:-1px; margin:0;" class="product-name" th:text="${review.goods.gname}">상품명</p>
+                </div>
+            </td>
+
+            <!-- 리뷰 제목 -->
+            <td class="review-content" style="vertical-align:middle; text-align:left;">
+                <a th:href="@{'/reviews/detail/' + ${review.id}}" th:text="${review.title}" class="text-dark text-decoration-none"></a>
+            </td>
+
+            <!-- 작성자 (익명 처리) -->
+            <td style="vertical-align:middle;" th:text="${#strings.substring(review.member.username, 0, 1)} + '****'">홍****</td>
+
+            <!-- 작성일 -->
+            <td style="vertical-align:middle;" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">2025-07-04</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- ✅ 페이지네이션 -->
+<nav class="pagination is-centered mt-4" role="navigation" aria-label="pagination">
+    <a class="pagination-previous"
+       th:if="${reviewPage.hasPrevious()}"
+       th:href="@{'/reviews/all?page=' + ${currentPage - 1}}">&lt;</a>
+
+    <a class="pagination-next"
+       th:if="${reviewPage.hasNext()}"
+       th:href="@{'/reviews/all?page=' + ${currentPage + 1}}">&gt;</a>
+
+    <ul class="pagination-list">
+        <li th:each="i : ${#numbers.sequence(startPage, endPage)}">
+            <a class="pagination-link"
+               th:classappend="${i == currentPage} ? ' is-current'"
+               th:href="@{'/reviews/all?page=' + ${i}}"
+               th:text="${i + 1}"></a>
+        </li>
+    </ul>
+</nav>
+
+    <div th:replace="~{common/footer}"></div>
+</body>
+</html>

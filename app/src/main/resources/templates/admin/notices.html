@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>공지사항 관리</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #343a40;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      padding: 20px 10px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+    }
+
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 30px;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <h4 class="text-white ps-2 mb-4">관리자</h4>
+  <a href="/admin">대시보드</a>
+  <a href="/admin/notices" class="bg-primary">공지사항</a>
+  <a href="/admin/members">회원</a>
+  <a href="/admin/goods">상품</a>
+  <a href="/admin/orders">주문</a>
+  <a href="/admin/reviews">리뷰</a>
+  <a href="/admin/qna">Q&A</a>
+
+  <hr class="bg-light">
+  <a href="/" class="bg-light text-dark fw-bold">메인으로</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="d-flex justify-content-between mb-4">
+    <h2 style="margin:0;">공지사항 관리</h2>
+    <div style="display:flex;">
+      <form th:action="@{/admin/notices}" method="get" class="d-flex" style="margin-right:10px; border-bottom:2px solid #000;">
+        <div class="control" style="margin-right:3px;">
+          <input style="border:0; box-shadow:none; padding:5px; height:30px;" class="input" type="text" name="keyword" placeholder="제목 검색"
+                 th:value="${keyword != null} ? ${keyword} : ''">
+        </div>
+        <div class="control">
+          <button type="submit" style="background-color:#fff; border:0;">
+            <img src="/ap_img/icon_search_bar.png">
+          </button>
+        </div>
+      </form>
+      <a class="btn btn-dark" href="/support/notice/form">공지등록</a>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="table-dark" style="vertical-align:middle;">
+    <tr>
+      <th>번호</th>
+      <th>제목</th>
+      <th>작성일</th>
+      <th>관리</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="notice : ${noticePage.content}">
+      <td style="vertical-align:middle;" th:text="${notice.id}">1</td>
+      <td style="vertical-align:middle;" th:text="${notice.title}">제목</td>
+      <td style="vertical-align:middle;" th:text="${#temporals.format(notice.resdate, 'yyyy.MM.dd')}">2025-07-08</td>
+      <td style="vertical-align:middle;">
+        <a class="btn btn-sm btn-primary" th:href="@{/support/notice/{id}(id=${notice.id})}">상세</a>
+        <a class="btn btn-sm btn-secondary" th:href="@{'/support/notice/edit/' + ${notice.id}}">수정</a>
+        <a class="btn btn-sm btn-danger" th:href="@{'/support/notice/delete/' + ${notice.id}}" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <nav th:if="${totalPages > 0}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+        <a class="page-link" th:href="@{/admin/notices(page=${currentPage - 1}, keyword=${keyword})}">이전</a>
+      </li>
+
+      <li class="page-item"
+          th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+          th:classappend="${i == currentPage} ? 'active'">
+        <a class="page-link"
+           th:href="@{/admin/notices(page=${i}, keyword=${keyword})}"
+           th:text="${i + 1}"></a>
+      </li>
+
+      <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+        <a class="page-link" th:href="@{/admin/notices(page=${currentPage + 1}, keyword=${keyword})}">다음</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

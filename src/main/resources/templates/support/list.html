@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>고객 센터</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_header.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_footer.css}">
+	<link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+	<style>
+		.tabs.is-toggle li.is-active a {
+			background-color:#fff;
+			border:0;
+			border-bottom:3px solid #000;
+			color:#000;
+			font-weight:bold;
+			border-radius:0;
+		}
+
+        .tabs.is-toggle a {
+            border:0;
+            border-radius:0;
+        }
+
+		.tabs.is-toggle li:last-child a, .tabs.is-toggle li:first-child a {
+			border-radius:0;
+		}
+
+		.table tbody td {
+		    padding: 21px !important;
+		}
+
+		.table tbody td, .table thead th {
+			border-width: 0 0 1px;
+		}
+
+		.info_phone {
+			display: flex;
+			flex-direction: column;
+			width: 40%;
+			text-align: center;
+			position: relative;
+			justify-content: center;
+		}
+
+		.info_phone .txt {
+			font-size: 17px;
+			font-weight: 500;
+			letter-spacing: -0.85px;
+			color: #000;
+		}
+
+		.info_phone .num {
+			font-size: 35px;
+			font-weight: bold;
+			letter-spacing: -1.2px;
+			color: #000;
+			line-height: 1;
+		}
+
+		.info_phone::after {
+			display: block;
+			content: '';
+			width: 1px;
+			height: 80px;
+			background: #ededed;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.info_time {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start; /* ⬅ 왼쪽 정렬 */
+			gap: 10px;
+			padding: 50px 50px;
+		}
+
+		.info_time dl {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin: 0;
+		}
+
+		.info_time dl dt {
+			font-size: 15px;
+			font-weight: bold;
+			letter-spacing: -0.85px;
+			color: #000;
+			margin-right: 10px;
+			white-space: nowrap;
+		}
+
+		.info_time dl dd {
+			font-size: 15px;
+			font-weight: 500;
+			letter-spacing: -0.85px;
+			color: #868686;
+		}
+
+		.column>a:hover {
+			background-color:#000 !important;
+			color:#fff !important;
+		}
+		.box {
+            border-radius:0 !important;
+            padding:0;
+        }
+
+		@media(max-width:1216px) {
+			.hello-box {
+				    flex-direction: column !important;
+    				align-items: flex-start !important;
+    				gap:20px;
+			}
+
+			.info_time {
+				flex-direction: column;
+			}
+		}
+
+		@media (max-width:948px) {
+			.info-customer {
+				padding-top:30px;
+				flex-direction:column
+			}
+
+			.info_phone {
+				width:100%;
+			}
+
+			.info_phone::after {
+				display:none;
+			}
+
+			.info_time {
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				gap:0;
+				border-top:1px solid #dbdbdb;
+				padding:0;
+				padding-top:15px;
+				margin:30px !important;
+				margin-top:15px !important;
+			}
+
+			.info_time dl {
+				justify-content: center;
+
+			}
+
+			.amore-hello {
+				width:100% !important;
+			}
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="common/header :: header"></th:block>
+	<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; border-bottom:1px solid #dbdbdb; margin-top:82px;" class="box has-text-centered">
+		<p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">고객센터</p>
+
+		<div class="container tabs is-toggle is-fullwidth is-centered">
+			<ul style="font-size:20px;">
+				<li class="is-active"><a th:href="@{/support/list}">고객센터</a></li>
+				<li><a th:href="@{/support/notice/list}">공지사항</a></li>
+				<li><a th:href="@{/support/qna/form}">Q&A</a></li>
+				<li><a th:href="@{/support/chat}">1:1채팅</a></li>
+			</ul>
+		</div>
+	</div>
+	<div style="margin-top:50px;" class="container">
+		<div style="width:100%; background: #f4f4f4; padding: 36px 40px; margin-bottom:50px;">
+			<div class="hello-box" style="display: flex; flex-direction: row; align-items: center;">
+				<div class="amore-hello" style="width: 50%; position: relative; top: 10px;">
+					<p style="font-weight:bold; font-size:25px; color:#000;">
+						안녕하세요 <br>
+						아모레퍼시픽 고객센터입니다.
+					</p>
+					<img src="/ap_img/icon_customer_bg.png" alt="" style="filter: grayscale(100%) brightness(0); position:absolute; left:142px; top:-30px;">
+
+					<img src="/ap_img/icon_customer_smile_bg.png" alt="" style="left:155px; top:-15px; position:absolute;">
+
+				</div>
+				<div class="info-customer" style="width: 100%; background: #fff; border-radius: 8px; display: flex;">
+					<dl class="info_phone">
+						<dt class="txt">고객만족센터 전화상담</dt>
+						<dd class="num">010-9216-7038</dd>
+					</dl>
+					<div class="info_time">
+						<dl>
+							<dt>상담시간</dt>
+							<dd>평일 10:00 - 17:00(주말/공휴일 휴무)</dd>
+						</dl>
+						<dl>
+							<dt>점심시간</dt>
+							<dd>12:00 - 13:00</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="columns ">
+			<!-- 공지사항 -->
+			<div class="column is-half">
+				<div class="box" style="box-shadow:none;">
+					<div class="is-flex is-justify-content-space-between is-align-items-center" style="border-bottom:1px solid #000; padding-bottom:10px;">
+						<h2 style="color:#000;" class="subtitle is-4 mb-0">공지사항</h2>
+						<a th:href="@{/support/notice/list}" class="button is-small is-light">더보기</a>
+					</div>
+					<table class="table is-fullwidth" style="border-bottom:1px solid #dbdbdb">
+						<tbody>
+							<!-- 최신 글 순으로 공지사항 출력 -->
+							<tr th:each="notice : ${notices}">
+								<td>
+									<a th:href="@{/support/notice/{id}(id=${notice.id})}" th:text="${notice.title}">공지사항
+										제목</a>
+								</td>
+								<td class="has-text-right" th:text="${#temporals.format(notice.resdate, 'yyyy.MM.dd')}">
+									2025.05.22
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- FAQ -->
+			<div class="column is-half">
+				<div class="box" style="box-shadow:none;">
+					<div class="is-flex is-justify-content-space-between is-align-items-center" style="border-bottom:1px solid #000; padding-bottom:10px; margin-bottom:30px;">
+						<h2 style="" class="subtitle is-4 mb-0">Q&A</h2>
+						<a th:href="@{/support/qna/list}" class="button is-small is-light">더보기</a>
+					</div>
+					<div class="columns is-multiline is-mobile">
+						<div class="column is-half">
+							<a th:href="@{/support/qna/list(category='상품문의')}"
+								class="box is-flex is-align-items-center is-justify-content-center has-text-dark"
+								style="text-decoration: none; background: #efefef; box-shadow:none; padding:25px;">
+								<p class="is-size-6 mb-0">상품문의</p>
+							</a>
+						</div>
+
+						<div class="column is-half">
+							<a th:href="@{/support/qna/list(category='쿠폰/포인트')}"
+								class="box is-flex is-align-items-center is-justify-content-center has-text-dark"
+								style="text-decoration: none; background: #efefef; box-shadow:none; padding:25px;">
+								<p class="is-size-6 mb-0">쿠폰/포인트</p>
+							</a>
+						</div>
+
+						<div class="column is-half">
+							<a th:href="@{/support/qna/list(category='주문/결제')}"
+								class="box is-flex is-align-items-center is-justify-content-center has-text-dark"
+								style="text-decoration: none; background: #efefef; box-shadow:none; padding:25px;">
+								<p class="is-size-6 mb-0">주문/결제</p>
+							</a>
+						</div>
+
+						<div class="column is-half">
+							<a th:href="@{/support/qna/list(category='배송문의')}"
+								class="box is-flex is-align-items-center is-justify-content-center has-text-dark"
+								style="text-decoration: none; background: #efefef; box-shadow:none; padding:25px;">
+								<p class="is-size-6 mb-0">배송문의</p>
+							</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:replace="common/footer :: footer"></th:block>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='결제 완료')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div style="width:100%; max-width:1380px; margin:0 auto; box-shadow:none; margin-bottom:0; padding:0; margin-top:82px;" class="box has-text-centered">
+  <p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">주문완료</p>
+  <div class="has-text-centered">
+    <p style="font-size:20px; font-weight:bold; margin-bottom:5px;">고객님의 주문이 완료되었습니다.</p>
+    <p style="font-size:13px;">주문내역 및 배송에 관한 안내는 <a style="color:#000; font-weight:bold; text-decoration:underline;" href="/orders/mypage">주문조회</a> 를 통하여 확인 가능합니다.</p>
+  </div>
+
+  <div>
+    <p style="margin:0;font-size:13px;"><span>주문번호:</span><span th:text="${order.orderId}">ORDER_123456</span></p>
+    <p style="margin:0;font-size:13px;"><span>주문일자:</span><span th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd HH:mm')}">2025-07-02</span></p>
+
+    <p style="margin:0; color:#000; padding-bottom:10px; border-bottom:1px solid #000; width:100%; text-align:left; font-size:20px; font-weight:bold; margin-top:50px;">결제정보</p>
+    <table class="table is-fullwidth">
+      <tbody>
+      <tr>
+        <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left;">최종결제금액</td>
+        <td style="border:0; text-align:left; font-size:14px; padding:10px;"
+            th:text="|${#numbers.formatInteger(order.totalAmount, 0, 'COMMA')}원|">
+          30,000원
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left;">결제수단</td>
+        <td style="border:0; text-align:left; font-size:14px; padding:10px;">카카오페이</td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <p style="margin:0; color:#000; padding-bottom:10px; border-bottom:1px solid #000; width:100%; text-align:left; font-size:20px; font-weight:bold;">주문 상품 정보</p>
+    <table class="table is-fullwidth is-striped">
+      <thead>
+      <tr style="border:0;">
+        <th style="vertical-align:middle; max-width:100px; width:10%; text-align:center; border-bottom:1px solid #dbdbdb;">이미지</th>
+        <th style="vertical-align:middle; text-align:center; border-bottom:1px solid #dbdbdb;">상품정보</th>
+        <th style="vertical-align:middle; width:5%; text-align:center; border-bottom:1px solid #dbdbdb;">수량</th>
+        <th style="vertical-align:middle; width:10%; text-align:center; border-bottom:1px solid #dbdbdb;">판매가</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="item : ${order.items}">
+        <td style="vertical-align:middle; padding:20px 10px;">
+          <a th:href="@{/goods/detail/{id}(id=${item.goods.no})}">
+            <img style="width:72px;" th:src="@{'/uploads/' + ${item.goods.img1}}" />
+          </a>
+        </td>
+        <td style="text-align:left; vertical-align:middle;" th:text="${item.goods.gname}">상품 A</td>
+        <td style="vertical-align:middle;" th:text="${item.quantity}">2</td>
+        <td style="vertical-align:middle;" th:text="${#numbers.formatInteger(item.unitPrice, 3, 'COMMA')} + '원'">10000원</td>
+      </tr>
+      <tr style="border-bottom:1px solid #dbdbdb;">
+        <td style="width:100%; padding:15px;" colspan="4">
+          <div style="display:flex; justify-content:space-between;">
+            <p style="margin:0;">[기본배송]</p>
+            <div>
+              상품구매금액
+              <span th:text="|${#numbers.formatInteger(order.totalAmount - (order.totalAmount >= 30000 ? 0 : 3000), 0, 'COMMA')}원|"></span>
+
+              <span>+</span>
+              <span>배송비</span>
+              <span th:text="|${order.totalAmount >= 30000 ? '0원' : '3,000원'}|"></span>
+
+              <span>=</span>
+              <span>합계 :</span>
+              <span th:text="|${#numbers.formatInteger(order.totalAmount, 0, 'COMMA')}원|"></span>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:50px" class="buttons is-centered">
+    <a style="text-decoration:none;" href="/" class="button is-dark">메인으로</a>
+  </div>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

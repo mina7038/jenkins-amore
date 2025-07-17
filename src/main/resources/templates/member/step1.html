@@ -1,0 +1,148 @@
+<!-- templates/member/step1.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='약관 동의')}"></head>
+<body>
+<div th:replace="~{common/header :: header}"></div>
+
+<section class="section" style="padding-top: 100px;">
+    <div class="container" style="max-width: 700px;">
+        <h1 class="title is-3 has-text-centered mb-6">약관 동의</h1>
+
+        <form th:action="@{/member/join/step1}" method="post">
+            <div class="box">
+
+                <!-- ✅ 모두 동의 버튼 -->
+                <div class="field mb-4 has-text-centered">
+                    <button type="button"
+                            id="toggleAllBtn"
+                            class="button is-white is-fullwidth has-text-weight-semibold is-size-6"
+                            onclick="toggleAllAgreements(event)">
+                        모두 동의합니다.
+                    </button>
+                </div>
+
+                <!-- 약관 1 -->
+                <div class="field">
+                    <label class="checkbox">
+                        <input type="checkbox" name="agree_privacy" required>
+                        (필수) 개인정보처리방침에 동의합니다.
+                    </label>
+                    <textarea class="textarea is-small mt-2" readonly rows="4">
+제1조(목적)
+이 약관은 아모레퍼시픽 유한회사(전자상거래 사업자)가 운영하는 아모레퍼시픽(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 몰과 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.
+
+제2조(정의)
+① “몰”이란 아모레퍼시픽 유한회사가 재화 또는 용역(이하 “재화 등”이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 재화 등을 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 사이버몰을 운영하는 사업자의 의미로도 사용합니다.
+② “이용자”란 “몰”에 접속하여 이 약관에 따라 “몰”이 제공하는 서비스를 받는 회원 및 비회원을 말합니다.
+③ ‘회원’이라 함은 “몰”에 회원등록을 한 자로서, 계속적으로 “몰”이 제공하는 서비스를 이용할 수 있는 자를 말합니다.
+④ ‘비회원’이라 함은 회원에 가입하지 않고 “몰”이 제공하는 서비스를 이용하는 자를 말합니다.
+                    </textarea>
+                </div>
+
+                <!-- 약관 2 -->
+                <div class="field mt-4">
+                    <label class="checkbox">
+                        <input type="checkbox" name="agree_terms" required>
+                        (필수) 이용약관에 동의합니다.
+                    </label>
+                    <textarea class="textarea is-small mt-2" readonly rows="4">
+ ** 본 양식은 쇼핑몰 운영에 도움을 드리고자 샘플로 제공되는 서식으로 쇼핑몰 운영형태에 따른 수정이 필요합니다. 쇼핑몰에 적용하시기 전, 쇼핑몰 운영 사항 등을 확인하시고 적절한 내용을 반영하여 사용하시기 바랍니다. **
+
+1. 개인정보 수집목적 및 이용목적
+
+가. 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산
+
+콘텐츠 제공 , 구매 및 요금 결제 , 물품배송 또는 청구지 등 발송 , 금융거래 본인 인증 및 금융 서비스
+
+나. 회원 관리
+
+회원제 서비스 이용에 따른 본인확인 , 개인 식별 , 불량회원의 부정 이용 방지와 비인가 사용 방지 , 가입 의사 확인 , 연령확인 , 만14세 미만 아동 개인정보 수집 시 법정 대리인 동의여부 확인, 불만처리 등 민원처리 , 고지사항 전달
+
+2. 수집하는 개인정보 항목 : 이름 , 로그인ID , 비밀번호 , 이메일 , 14세미만 가입자의 경우 법정대리인의 정보
+
+3. 개인정보의 보유기간 및 이용기간
+
+원칙적으로, 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 다음의 정보에 대해서는 아래의 이유로 명시한 기간 동안 보존합니다.
+
+가. 회사 내부 방침에 의한 정보 보유 사유
+
+o 부정거래 방지 및 쇼핑몰 운영방침에 따른 보관 : OO년
+
+나. 관련 법령에 의한 정보보유 사유
+
+o 계약 또는 청약철회 등에 관한 기록
+
+-보존이유 : 전자상거래등에서의소비자보호에관한법률
+
+-보존기간 : 5년
+
+o 대금 결제 및 재화 등의 공급에 관한 기록
+
+-보존이유: 전자상거래등에서의소비자보호에관한법률
+
+-보존기간 : 5년
+
+o 소비자 불만 또는 분쟁처리에 관한 기록
+
+-보존이유 : 전자상거래등에서의소비자보호에관한법률
+
+-보존기간 : 3년
+
+o 로그 기록
+
+-보존이유: 통신비밀보호법
+
+-보존기간 : 3개월
+
+※ 동의를 거부할 수 있으나 거부시 회원 가입이 불가능합니다.
+
+
+#개인정보의 위탁 처리
+“아모레퍼시픽”은 서비스 향상을 위해 관계법령에 따라 회원의 동의를 얻거나 관련 사항을 공개 또는 고지 후 회원의 개인정보를 외부에 위탁하여 처리하고 있습니다.
+“아모레퍼시픽”의 개인정보처리 수탁자와 그 업무의 내용은 다음과 같습니다.
+- 수탁자 : ㈜김김최최
+- 위탁 업무 내용 : 신규 서비스(제품) 개발 및 맞춤 서비스 제공, 이벤트 및 광고성 정보 및 참여기회 제공
+- 수집항목 : 이름, 아이디, 휴대전화번호
+- 보유기간 : 회원 탈퇴 시 혹은 법정 보유 기간
+                    </textarea>
+                </div>
+
+                <!-- 선택 약관 -->
+                <div class="field mt-4">
+                    <label class="checkbox">
+                        <input type="checkbox" name="agree_marketing">
+                        (선택) 광고성 정보 수신에 동의합니다.
+                    </label>
+                </div>
+            </div>
+
+            <div class="has-text-centered mt-5">
+                <button type="submit" class="button is-black is-fullwidth is-medium has-text-weight-bold" style="font-size:18px;">
+                    다음 단계로
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- ✅ 체크박스 전체 토글 스크립트 -->
+<script>
+    function toggleAllAgreements(event) {
+        event.preventDefault();
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+        checkboxes.forEach(cb => {
+            cb.checked = !allChecked;
+            cb.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+
+        const btn = document.getElementById("toggleAllBtn");
+        btn.textContent = allChecked ? "모두 동의합니다." : "모두 해제합니다.";
+    }
+</script>
+
+<div th:replace="~{common/footer :: footer}"></div>
+</body>
+</html>

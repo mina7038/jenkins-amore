@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='결제 실패')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div class="container" style="max-width: 700px; margin-top: 60px;">
+  <div class="notification is-danger has-text-centered">
+    <h2 class="title is-4">결제에 실패했습니다.</h2>
+    <p>잠시 후 다시 시도해 주세요.</p>
+  </div>
+
+  <div class="box">
+    <h3 class="title is-6">주문 정보</h3>
+    <p><strong>주문번호:</strong> <span th:text="${orderId}">ORDER_123456</span></p>
+  </div>
+
+  <div class="buttons is-centered mt-4">
+    <a href="/" class="button is-link is-light">메인으로</a>
+    <a href="/cart" class="button is-danger">장바구니로 돌아가기</a>
+  </div>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

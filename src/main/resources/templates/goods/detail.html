@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{common/head :: head(title='상품 목록')}"></head>
+<div th:replace="~{common/header}"></div>
+
+<body>
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .detail-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 12px;
+    }
+
+    .gallery {
+        flex: 0 0 55%;
+        max-width: 55%;
+    }
+
+    .info {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    .gallery {
+        text-align: center;
+    }
+
+    .gallery img {
+        max-width: 100%;
+    }
+
+    .detail-banner {
+        max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        position: relative;
+    }
+
+    .discount {
+        color: red;
+    }
+
+    .discount,
+    .sale-price {
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .orig-price {
+        font-size: 20px;
+    }
+
+    .meta {
+        margin-bottom: 0px;
+    }
+
+    /* 버튼들 반응형 조정 */
+    .actions {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+        width: fit-content;
+    }
+
+    .qty-btn {
+        width: 36px;
+        height: 30px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        background: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .qty-btn:hover {
+        background: #f5f5f5;
+    }
+
+    .quantity-control input {
+        width: 48px;
+        height: 30px;
+        text-align: center;
+        font-size: 1rem;
+        border: none;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        background: #fff;
+        pointer-events: none;
+    }
+
+    .notification {
+        padding: 20px !important;
+    }
+
+    .actions {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .actions button {
+        flex: 1 1 50%;
+    }
+
+    .tab-button {
+        flex: 1;
+        text-align: center;
+        padding: 16px;
+        font-weight: normal;
+        border-bottom: 3px solid transparent;
+        color: gray;
+        cursor: pointer;
+    }
+
+    .tab-button.is-active {
+        font-weight: bold;
+        color: black;
+        border-bottom: 3px solid black;
+    }
+
+    @media screen and (min-width: 768px) {
+        .detail-container {
+            flex-wrap: nowrap;
+        }
+    }
+
+    @media screen and (max-width: 1260px) {
+
+        .gallery,
+        .info {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .detail-container {
+            margin-top:0 !important;
+
+        }
+
+        .wrap {
+            padding:10px !important;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .title {
+            font-size: 1.4rem;
+        }
+
+        .sale-price {
+            font-size: 1.4rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 10px;
+        }
+
+        .order-widget {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .qty {
+            gap: 5px;
+        }
+
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+        }
+
+        .qty input {
+            width: 40px;
+            font-size: 0.9rem;
+        }
+
+        .total .total-price {
+            font-size: 1.2rem;
+        }
+
+        .meta {
+            font-size: 0.75rem;
+        }
+
+        .brand {
+            font-size: 0.8rem;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+        }
+
+        .payments img {
+            height: 24px;
+        }
+    }
+</style>
+<div class="wrap">
+    <div class="detail-container">
+        <!-- 좌: 메인 이미지 -->
+        <div class="gallery">
+            <img th:src="@{/uploads/{f}(f=${goods.img1})}" th:alt="${goods.gname}" alt="상품 이미지">
+        </div>
+
+        <!-- 우: 상품 정보 -->
+        <div class="info">
+            <div class="brand" th:text="${goods.brand}">브랜드</div>
+            <h6 style="font-size:28px; margin:0;" class="title" th:text="${goods.gname}">상품명</h6>
+            <p style="margin:0;" class="subtitle" th:text="${goods.comment}">상품 설명</p>
+
+
+            <!-- 가격 -->
+            <div class="price-area">
+                <span class="discount" th:if="${goods.discount > 0}" th:text="${goods.discount + '%'}">할인율</span>
+                <span class="sale-price" th:text="${#numbers.formatInteger(goods.price2, 3, 'COMMA')} + '원'">세일가</span>
+                <del><span class="orig-price" th:if="${goods.discount > 0}"
+                           th:text="${#numbers.formatInteger(goods.price1, 3, 'COMMA')} + '원'">정가</span></del>
+
+            </div>
+
+            <div class="meta">
+                적립금: 회원등급별 3~7% 적립<br>
+                배송: 오늘 출발 예정 (밤10시까지 결제 시)
+            </div>
+
+            <!-- 로그인한 사용자만 보이게 -->
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/cart/add}" method="post">
+                    <input type="hidden" name="goodsId" th:value="${goods.no}"/>
+                    <input type="hidden" id="cartQuantity" name="quantity" value="1"/>
+
+                    <div style="background-color:#f8f8f8; padding:20px;">
+                        <p style="color:#000; font-weight:bold;" th:text="${goods.gname}">상품명</p>
+                        <div class="order-widget" style="display:flex; justify-content:space-between;">
+                            <div class="quantity-control">
+                                <button type="button" class="qty-btn minus" id="minus">−</button>
+                                <input type="text" id="quantity" name="quantity" value="1" readonly>
+                                <button type="button" class="qty-btn plus" id="plus">＋</button>
+                            </div>
+                            <div style="font-weight:bold;" class="line-price" id="linePrice">0원</div>
+                        </div>
+                    </div>
+
+                    <div class="total" style="display:flex; justify-content:space-between; margin-top:20px;">
+                        <span style="padding-top:10px;">상품금액 합계</span>
+                        <strong style="font-size:32px;" class="total-price" id="totalPrice">0원</strong>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn btn-outline-dark" type="submit">장바구니 담기</button>
+                    </div>
+                </form>
+                <form th:action="@{/payment/shipping}" method="get">
+                    <input type="hidden" name="type" value="product"/>
+                    <input type="hidden" name="userId" th:value="${user?.id}"/>
+                    <input type="hidden" name="goodsId" th:value="${goods.no}"/>
+                    <input type="hidden" name="quantity" id="kakaoQuantity" value="1"/>
+                    <button type="submit" style="width:100%; margin-top:10px;" class="btn btn-dark">바로 구매하기</button>
+                </form>
+            </div>
+
+            <!-- 비로그인 시 안내 -->
+            <div sec:authorize="isAnonymous()" class="notification is-outline-warning">
+                장바구니 담기 및 구매는 로그인 후 이용 가능합니다.
+                <a href="/member/login" class="button is-small is-info ml-2">로그인</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="border-top: 1px solid #e1e1e1; border-bottom: 1px solid #e1e1e1; margin-top: 100px; margin-bottom:50px;">
+        <div style="display: flex; justify-content: center; max-width: 900px; margin: 0 auto;">
+            <a href="#" id="tab-detail" class="tab-button is-active">상세정보</a>
+            <a href="#" id="tab-review" class="tab-button">상품후기</a>
+        </div>
+    </div>
+
+    <!-- 하단 상세 설명 이미지 (img2) -->
+    <div id="section-detail" class="detail-banner" style="display: block;">
+        <img th:src="@{/uploads/{f}(f=${goods.img2})}" alt="상품 상세 설명 이미지" style="width:100%; height:100%;"/>
+    </div>
+
+    <!-- 리뷰 목록 -->
+    <div id="section-reviews" class="section"
+         style="display:none; max-width:1440px; margin:0 auto; margin-top:100px; padding-top:0;">
+        <section style="padding:0;" class="section">
+            <div style="padding:0;" class="container">
+                <h2 class="title is-5"
+                    style="display:flex; justify-content: space-between; margin:0; border-bottom: 2px solid #14161a; margin-bottom:20px;">
+                    <div>
+                        <p style="margin-bottom:5px;">REVIEW(<span th:text="${reviewCount}">0</span>)</p>
+                        <p class="has-text-grey" style="font-size:14px;">상품 리뷰</p>
+                    </div>
+                    <a href="/reviews/all" class="is-pulled-right has-text-grey" style="font-size:15px; padding-top:10px;">전체 상품 리뷰
+                        보기</a>
+                </h2>
+                <div class="columns is-vcentered"
+                     style="border-bottom:1px solid #d8dde5; padding-bottom:20px; margin:0;">
+                    <!-- 왼쪽: 별점 평균 -->
+                    <div class="column is-one-third has-text-centered" style="border-right:solid 1px #d8dde5">
+						<span class="icon is-large has-text-warning mb-3">
+							<i class="fas fa-star fa-2x"></i>
+						</span>
+                        <span class="title is-2 has-text-black" th:text="${averageScore}">4.8</span>
+                        <p><strong th:text="${satisfactionRate + '%'}">97%</strong>의 구매자가 이 상품을 좋아합니다.</p>
+                    </div>
+
+                    <div class="column is-two-thirds">
+                        <th:block th:each="i : ${#numbers.sequence(5, 1, -1)}">
+                            <div class="columns is-vcentered">
+                                <!-- 평점 라벨 -->
+                                <div class="column is-2 is-size-7" style="text-align: center;">
+					<span th:text="${i == 5 ? '아주 좋아요' :
+									i == 4 ? '맘에 들어요' :
+									i == 3 ? '보통이에요' :
+									i == 2 ? '그냥 그래요' : '별로예요'}"></span>
+                                </div>
+
+                                <!-- 퍼센트 바 -->
+                                <div class="column">
+                                    <progress class="progress is-warning" max="100"
+                                              th:value="${scorePercentMap.get(i) != null ? scorePercentMap.get(i) : 0}"
+                                              style="height: 16px;">
+                                    </progress>
+                                </div>
+
+                                <!-- 오른쪽 숫자 -->
+                                <div class="column is-1 is-size-7" style="text-align:center;"
+                                     th:text="${scoreCountMap.get(i) != null ? scoreCountMap.get(i) : 0}">
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const tabDetail = document.getElementById("tab-detail");
+                const tabReview = document.getElementById("tab-review");
+                const sectionDetail = document.getElementById("section-detail");
+                const sectionReviews = document.getElementById("section-reviews");
+
+                tabDetail.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    sectionDetail.style.display = "block";
+                    sectionReviews.style.display = "none";
+                    tabDetail.classList.add("is-active");
+                    tabReview.classList.remove("is-active");
+                });
+
+                tabReview.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    sectionDetail.style.display = "none";
+                    sectionReviews.style.display = "block";
+                    tabDetail.classList.remove("is-active");
+                    tabReview.classList.add("is-active");
+                });
+            });
+        </script>
+
+        <div style="padding-top:30px; text-align:center;" th:if="${#lists.isEmpty(reviews)}">
+            <p class="has-text-grey">아직 등록된 리뷰가 없습니다.</p>
+        </div>
+
+        <div th:each="review : ${reviews}" class="box"
+             style="margin:0; border:0; border-radius:0; box-shadow:none; border-bottom:1px solid #d8dde5;">
+            <div class="columns is-vcentered">
+
+                <!-- 왼쪽: 리뷰 본문 -->
+                <div style="border-right: 1px solid #d8dde5; margin:20px; padding:0;" class="column is-9">
+                    <p>
+                        <strong>
+		          <span style="display:inline-block; width:21px; height:21px;"
+                        th:each="i : ${#numbers.sequence(1, review.rating)}">
+		            <img style="width:21px; height:21px;" src="/ap_img/star.PNG" alt="별"/>
+		          </span>
+                            <span style="font-size:14px; vertical-align: top;" th:switch="${review.rating}">
+		            <span th:case="5">아주 좋아요</span>
+		            <span th:case="4">맘에 들어요</span>
+		            <span th:case="3">보통이에요</span>
+		            <span th:case="2">그냥 그래요</span>
+		            <span th:case="1">별로예요</span>
+		          </span>
+                        </strong>
+                    </p>
+                    <a th:href="@{'/reviews/detail/' + ${review.id}}" th:text="${review.title}" class="text-dark text-decoration-none"></a>
+
+                </div>
+
+                <!-- 오른쪽: 사용자 정보 -->
+                <div class="column is-3" style="padding-left:20px; font-size: 0.9rem;">
+                    <p style="font-weight:bold;">
+                        <span th:text="${#strings.substring(review.member.username, 0, 2)} + '****'"></span>님의 리뷰입니다.
+                    </p>
+                    <p style="font-size:13px;"><span th:text="${#temporals.format(review.createdAt, 'yyyy.MM.dd')}">2025.07.04</span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        const unitPrice = /*[[${goods.price2}]]*/ 0;
+        const qtyInput = document.getElementById('quantity');
+        const minusBtn = document.getElementById('minus');
+        const plusBtn = document.getElementById('plus');
+        const linePrice = document.getElementById('linePrice');
+        const totalPrice = document.getElementById('totalPrice');
+
+        function update() {
+            const count = parseInt(qtyInput.value, 10);
+            const sum = unitPrice * count;
+            linePrice.textContent = sum.toLocaleString() + '원';
+            totalPrice.textContent = sum.toLocaleString() + '원';
+
+            // ✅ 수량 동기화
+            document.getElementById('cartQuantity').value = count;
+            document.getElementById('kakaoQuantity').value = count;
+        }
+
+        minusBtn.addEventListener('click', () => {
+            let v = parseInt(qtyInput.value, 10);
+            if (v > 1) {
+                qtyInput.value = v - 1;
+                update();
+            }
+        });
+
+        plusBtn.addEventListener('click', () => {
+            qtyInput.value = parseInt(qtyInput.value, 10) + 1;
+            update();
+        });
+
+        update();
+    </script>
+</div>
+<div th:replace="~{common/footer}"></div>
+</body>
+
+</html>

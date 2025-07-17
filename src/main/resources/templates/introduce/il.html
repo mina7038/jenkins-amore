@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+  <meta charset="UTF-8" />
+  <title>OSULLOC Scroll Branding</title>
+  <style>
+     @font-face {
+      font-family: 'AritaDotum';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.0/AritaDotum-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 200vh;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url('/ap_img/1920x1110.jpg') no-repeat center center / cover;
+      z-index: 0;
+    }
+
+    .intro-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+
+.overlay {
+  position: fixed;
+  bottom: 0;
+  height: 0vh; /* 꼭 vh 단위로 고정 */
+  overflow: hidden;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  transition: height 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+    .overlay-text {
+      color: white;
+      max-width: 1000px;
+      text-align: left;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 1;
+    }
+.overlay-text .title {
+  text-align: center;   /* ✅ h2만 중앙 정렬 */
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.intro-logo {
+  text-decoration: none;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <!-- 중앙 브랜드 로고 -->
+  <a href="/il" class="intro-logo" id="introLogo">
+  <img src="/ap_img/gamma_350x54.png" alt="오설록 로고">
+  </a>
+
+  <!-- 어두운 오버레이와 텍스트 -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-text">
+        <h2 class="title">민감한 피부 고민에 대한 순하고 강력한 답, 일리윤</h2>
+      <p>
+       일리윤(ILLIYOON, 一理潤)은 40여년의 민감 피부 연구를 통해 얻은 피부와 닮은 보습 특화 성분으로 민감한 피부 고민을 근본적으로 해결하는<br>
+       저자극 더마 보습 브랜드입니다.<br><br>
+
+       민감은 피부만의 문제로 볼 수 없기 때문에, 일리윤은 피부 효능 뿐 아니라 환경, 생애 주기까지 복합적으로 연구하여 피부 본연의 건강한 힘을 되<br> 
+       찾을 수 있는 순하고 강력한 답을 제시합니다. 민감한 피부를 가진 고객이 불편하지 않도록 오롯이 민감 피부만 생각해 온 진심을 더합니다.<br>
+     
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const logo = document.getElementById('introLogo');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      // 오버레이 올라오기
+      const heightPercent = Math.min((scrollY / windowHeight) * 100, 100);
+      overlay.style.height = heightPercent + '%';
+
+      // 로고 페이드 아웃
+      const fade = Math.max(1 - (scrollY / (windowHeight * 0.5)), 0); // 0~1 사이
+      logo.style.opacity = fade;
+    });
+  </script>
+
+</body>
+</html>

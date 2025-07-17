@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='배송지 입력')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div style="width:100%; max-width:1380px; margin:0 auto; box-shadow:none; margin-bottom:0; padding:0; margin-top:82px;" class="box has-text-centered">
+	<p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">배송지 정보 입력</p>
+
+  <form th:action="@{/payment/shipping}" method="post">
+    <!-- 주문 구분 -->
+    <input type="hidden" name="type" th:value="${type}" />
+    <input type="hidden" name="userId" th:value="${userId}" />
+    <input type="hidden" name="goodsId" th:value="${goodsId}" />
+    <input type="hidden" name="quantity" th:value="${quantity}" />
+	<th:block th:if="${cartItemIds != null}">
+	  <input type="hidden" th:each="id : ${cartItemIds}" name="cartItemIds" th:value="${id}" />
+	</th:block>
+
+    <!-- 주문자 정보 -->
+	  <div style="box-shadow:none; margin:0;" class="box">
+		  <p style="margin:0; color:#000; padding-bottom:10px; border-bottom:1px solid #000; width:100%; text-align:left; font-size:20px; font-weight:bold;">주문자 정보</p>
+		  <table class="table is-fullwidth">
+			  <tbody>
+			  <tr>
+				  <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left; vertical-align:middle;">이름</td>
+				  <td style="border:0; text-align:left; font-size:14px;"><input style="border:0; padding:0;" class="input" type="text" th:value="${defaultName}" readonly></td>
+			  </tr>
+			  <tr>
+				  <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left; vertical-align:middle;">전화번호</td>
+				  <td style="border:0; text-align:left; font-size:14px;"><input style="border:0; padding:0;" class="input" type="tel" th:value="${defaultPhone}" readonly></td>
+			  </tr>
+			  <tr>
+				  <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left; vertical-align:middle;">주소</td>
+				  <td style="display:flex; border:0; text-align:left; font-size:14px;">
+					  <input
+							  class="input"
+							  type="text"
+							  name="fullAddress"
+							  readonly
+							  style="border:0; width:100%; padding:0;"
+							  th:value="${defaultPostcode} + ' ' + ${defaultAddr1} + ' ' + ${defaultAddr2}"
+					  />
+				  </td>
+			  </tr>
+			  </tbody>
+		  </table>
+	  </div>
+
+    <!-- 배송지 정보 입력 -->
+	  <div style="box-shadow:none;" class="box">
+		  <div style="display:flex; width:100%; justify-content: space-between; padding-bottom:10px; border-bottom:1px solid #000;">
+			  <p style="margin:0; color:#000; text-align:left; font-size:20px; font-weight:bold;">배송지 입력</p>
+
+			  <!-- 내 정보 가져오기 체크박스 -->
+			  <div class="field">
+				  <label class="checkbox">
+					  <input type="checkbox" id="useMyInfoCheckbox" onchange="fillMyInfo()"> 내 정보로 배송지 자동 입력
+				  </label>
+			  </div>
+		  </div>
+
+		  <table class="table is-fullwidth">
+			  <tbody>
+			  <tr>
+				  <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left; vertical-align:middle;">받는 사람</td>
+				  <td style="border:0; text-align:left; font-size:14px;"><input class="input" type="text" name="name" id="receiverName" required></td>
+			  </tr>
+			  <tr>
+				  <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left; vertical-align:middle;">전화번호</td>
+				  <td style="border:0; text-align:left; font-size:14px;"><input class="input" type="tel" name="phone" id="receiverPhone" placeholder="010-1234-5678" required></td>
+			  </tr>
+			  <tr>
+				  <td style="padding:10px 0 10px 13px; width:160px; border:0; font-size:16.5px; font-weight:normal; text-align:left; vertical-align:middle;">주소</td>
+				  <td style="border:0; text-align:left; font-size:14px;">
+					  <!-- 우편번호 + 주소찾기 -->
+					  <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+						  <input class="input" type="text" id="receiverPostcode" name="postcode" placeholder="우편번호" readonly style="width: 150px;" />
+						  <button type="button" class="button is-black" onclick="addrCheck()">주소찾기</button>
+					  </div>
+
+					  <!-- 기본 주소 -->
+					  <div style="margin-bottom: 8px;">
+						  <input class="input" type="text" id="receiverAddress" name="addr1" placeholder="기본주소" readonly style="width: 100%;" />
+					  </div>
+
+					  <!-- 상세 주소 -->
+					  <div>
+						  <input class="input" type="text" id="receiverDetailAddress" name="addr2" placeholder="상세주소를 입력하세요" style="width: 100%;" />
+					  </div>
+				  </td>
+			  </tr>
+			  </tbody>
+		  </table>
+	  </div>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		  <script>
+		    function addrCheck() {
+		      new daum.Postcode({
+		        oncomplete: function(data) {
+		          document.getElementById("receiverPostcode").value = data.zonecode;
+		          document.getElementById("receiverAddress").value = data.address;
+		          document.getElementById("receiverDetailAddress").focus();
+		        }
+		      }).open();
+		    }
+		  </script>
+		  <script>
+		    const defaultName = "[[${defaultName}]]";
+		    const defaultPhone = "[[${defaultPhone}]]";
+		    const defaultPostcode = "[[${defaultPostcode}]]";
+		    const defaultAddr1 = "[[${defaultAddr1}]]";
+		    const defaultAddr2 = "[[${defaultAddr2}]]";
+
+		    function fillMyInfo() {
+		      const isChecked = document.getElementById("useMyInfoCheckbox").checked;
+
+		      if (isChecked) {
+		        document.getElementById("receiverName").value = defaultName;
+		        document.getElementById("receiverPhone").value = defaultPhone;
+		        document.getElementById("receiverPostcode").value = defaultPostcode;
+		        document.getElementById("receiverAddress").value = defaultAddr1;
+		        document.getElementById("receiverDetailAddress").value = defaultAddr2;
+		      } else {
+		        document.getElementById("receiverName").value = "";
+		        document.getElementById("receiverPhone").value = "";
+		        document.getElementById("receiverPostcode").value = "";
+		        document.getElementById("receiverAddress").value = "";
+		        document.getElementById("receiverDetailAddress").value = "";
+		      }
+		    }
+		  </script>
+
+
+    <div class="field mt-4" style="margin-bottom:50px;">
+      <button style="width:200px; height:54px; margin:0 auto;" class="button is-dark is-fullwidth" type="submit">결제하기</button>
+    </div>
+  </form>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+
+</body>
+</html>

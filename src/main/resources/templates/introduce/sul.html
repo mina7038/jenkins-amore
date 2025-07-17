@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+  <meta charset="UTF-8" />
+  <title>OSULLOC Scroll Branding</title>
+  <style>
+     @font-face {
+      font-family: 'AritaDotum';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.0/AritaDotum-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 200vh;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url('/ap_img/1920x970_4_1.jpg') no-repeat center center / cover;
+      z-index: 0;
+    }
+
+    .intro-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+
+.overlay {
+  position: fixed;
+  bottom: 0;
+  height: 0vh; /* 꼭 vh 단위로 고정 */
+  overflow: hidden;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  transition: height 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+    .overlay-text {
+      color: white;
+      max-width: 1000px;
+      text-align: left;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 1;
+    }
+.overlay-text .title {
+  text-align: center;   /* ✅ h2만 중앙 정렬 */
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+.intro-logo {
+  text-decoration: none;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <!-- 중앙 브랜드 로고 -->
+ <a href="http://192.168.105.116:8085/" class="intro-logo" id="introLogo">
+  <img src="/ap_img/brands_gamma_2_1_1.png" alt="설화수 로고">
+</a>
+  <!-- 어두운 오버레이와 텍스트 -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-text">
+        <h2 class="title">시간의 흐름에 지지 않는 아름다움<br>Journey to Holistic Beauty</h2>
+      <p>
+        설화수는 전통의 지혜에서 영감을 받고 최신의 현대기술을 접목하여 솔루션을 만듭니다.<br><br>
+        한국의 미학에 동시대적 시선을 더해 우리만의 아름다움을 완성해갑니다.<br><br>
+
+       겉으로 드러나는 문제 해결 뿐 아니라, 눈에 보이지 않는 본질까지 더 넓고 깊게 연구합니다.<br> 
+       그러므로 설화수의 홀리스틱뷰티란 부분이 아닌 전체를 보는 시선, 숨겨진 본질에 대한<br>
+        사유, 과거와 미래의 시공간을 초월하는 진화입니다.<br>
+         <br>
+        끝없이 경계를 허물고 가능성을 확장하는 우리의 여정은<br>
+        시간의 흐름에 지지 않고 계속됩니다.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const logo = document.getElementById('introLogo');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      // 오버레이 올라오기
+      const heightPercent = Math.min((scrollY / windowHeight) * 100, 100);
+      overlay.style.height = heightPercent + '%';
+
+      // 로고 페이드 아웃
+      const fade = Math.max(1 - (scrollY / (windowHeight * 0.5)), 0); // 0~1 사이
+      logo.style.opacity = fade;
+    });
+  </script>
+
+</body>
+</html>

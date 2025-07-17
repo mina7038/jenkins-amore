@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Page Title</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontello.css}">
+</head>
+
+<body>
+	<footer id="ap_footer" class="ap_footer" th:fragment="ap_footer">
+		<div class="ap_footer__in">
+			<a class="btn-go_top" href="/">
+				<i class="icon icon-arrow-top"></i>
+				<br>
+				<span>TOP</span>
+			</a>
+			<div class="ap_footer-1">
+				<div class="footer-1_in">
+					<ul>
+						<li></li>
+					</ul>
+				</div>
+			</div>
+			<div class="ap_footer-2">
+				<div class="footer-2_1">FOLLOW US ON</div>
+				<div class="footer-2_2">
+					<ul>
+						<li class="fb"><a href="#"></a></li>
+						<li class="li"><a href="#"></a></li>
+						<li class="is"><a href="#"></a></li>
+						<li class="yt"><a href="#"></a></li>
+						<li class="sq"><a href="#"></a></li>
+					</ul>
+				</div>
+				<div class="footer-2-3">© Since 2025 Amorepacific, All Rights Reserved.</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			$(function () {
+				$(".btn-go_top").click(function (e) {
+					e.preventDefault();
+					$("html, body").animate({scrollTop: 0}, 500); // 0.5초 동안 스크롤
+				});
+			});
+		</script>
+
+	</footer>
+
+
+
+</body>
+
+</html>

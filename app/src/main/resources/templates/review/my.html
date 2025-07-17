@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='내 리뷰')}"></head>
+<body>
+<style>
+  .hide > ul > li >.active:before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #000;
+    border-radius: 50%;
+  }
+</style>
+<div th:replace="~{common/header}"></div>
+
+<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; margin-top:82px;" class="box has-text-centered">
+  <p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">상품 후기</p>
+    <div class="mypage-box" style="display:flex; max-width:1380px; margin:0 auto;">
+      <div class="hide" style="width:100%; max-width:300px;">
+        <ul style="text-align:left; padding:0;">
+          <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/member/mypage}">주문내역</a></li>
+          <li style="margin-bottom:20px; font-size:17px;"><a class="active" style="display:block; color: #000; position: relative; padding-left: 15px;" th:href="@{/reviews/my}">상품후기</a></li>
+          <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/support/qna/list}">1:1문의</a></li>
+          <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/member/edit}">회원정보 수정</a></li>
+        </ul>
+      </div>
+      <div style="width:100%;">
+        <!-- 탭 헤더 -->
+        <div style="display: flex; margin-bottom: 30px; border-bottom:1px solid #eef0f4;">
+          <button style="padding:10px 0;" class="tab-button active" onclick="showTab('available')">작성 가능한 리뷰 <span th:text="${availableReviews.size()}">0</span></button>
+          <button style="padding:10px 0; margin-left:30px;" class="tab-button" onclick="showTab('written')">내가 작성한 리뷰 <span th:text="${myReviews.size()}">0</span></button>
+        </div>
+
+        <!-- 탭 콘텐츠 -->
+        <div id="available" class="tab-content" style="display:block;">
+          <div th:if="${#lists.isEmpty(availableReviews)}" class="has-text-centered" style="padding: 30px; color: #999;">
+            현재 작성 가능한 리뷰가 없습니다.
+          </div>
+
+          <div class="columns is-multiline">
+            <div class="column is-half is-half-tablet is-full-mobile" th:each="item : ${availableReviews}">
+              <div class="box" style="padding:0; border-radius:0; box-shadow:none; border:1px solid #ddd; text-align:left;">
+                  <div style="padding:15px; display:flex; justify-content:space-between; border-bottom:1px solid #dbdbdb;">
+                    <a th:href="@{/orders/detail/{id}(id=${item.order.id})}" style="text-decoration: none; color: inherit; padding-top:3px;">
+                      <p style="margin:0; font-size: 15px; letter-spacing:-1px; text-decoration:underline;" th:text="${item.order.orderId}">ORDER_123456</p>
+                    </a>
+                    <a th:href="@{/reviews/write(goodsNo=${item.goods.no}, orderId=${item.order.id})}" class="button is-small is-dark">리뷰 작성</a>
+                  </div>
+                  <div style="padding:15px; display:flex; gap:15px;">
+                    <a th:href="@{/goods/detail/{id}(id=${item.goods.no})}">
+                      <img style="width:90px;" th:src="@{'/uploads/' + ${item.goods.img1}}" />
+                    </a>
+                    <div style="">
+                      <p style="font-weight: bold; margin:0;" th:text="${item.goods.gname}">상품명</p>
+                      <p style="margin:0;" th:text="${item.quantity} + '개'">2개</p>
+                      <p style="margin:0;"
+                      th:text="|${#numbers.formatInteger(item.unitPrice * item.quantity, 3, 'COMMA')}원|">
+                      20,000원</p>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="written" class="tab-content" style="display:block;">
+
+          <!-- 리뷰 수 -->
+          <p class="" style=" font-size:24px; margin-bottom: 8px; text-align:left; color:#000;">
+            <span style="font-weight:bold;" th:text="${myReviews.size()} + '개'">0개</span><span>의 리뷰를 작성하였습니다.</span>
+          </p>
+
+          <!-- 하나씩 나오는 리뷰 카드 -->
+          <div th:each="review : ${myReviews}" style="border-top: 1px solid #dadada;">
+            <div class="box" style="padding: 20px; box-shadow:none;">
+
+              <div style="display:flex; gap:20px;">
+                <!-- 이미지 -->
+                <div style="min-width:90px;">
+                  <img th:src="@{/uploads/{f}(f=${review.goods.img1})}" alt="상품 썸네일"
+                       style="width:100px; height:auto;">
+                </div>
+
+
+
+                <!-- 내용 -->
+                <div style="flex-grow:1; text-align:left; font-size:12px;">
+                  <p th:text="${review.goods.gname}" style="margin-bottom:3px; font-weight:bold;">상품명</p>
+                  <!-- 별점 -->
+                  <div style="margin-bottom:5px;">
+                    <span th:each="i : ${#numbers.sequence(1, review.rating)}"
+                          style="display:inline-block; width:15px; height:15px;">
+                      <img src="/ap_img/star.PNG" alt="별" style="width:100%; height:100;" />
+                    </span>
+                  </div>
+                  <p class="has-text-weight-semibold" th:text="${review.title}" style="margin-bottom:0;">제목</p>
+
+                  <p style="color:#555; font-size:12px; margin:0;">
+  <span th:if="${review.content != null}">
+    <span th:text="${#strings.length(review.content) > 50} ? ${#strings.substring(review.content, 0, 50)} : ${review.content}">내용</span>
+    <span th:if="${#strings.length(review.content) > 50}">
+      ...
+      <a th:href="@{/reviews/detail/{id}(id=${review.id})}"
+         style="color:#555; text-decoration:underline;">더보기</a>
+    </span>
+  </span>
+                  </p>
+
+                </div>
+
+                <!-- 작성일 -->
+                <div style="min-width:80px; text-align:right; font-size:14px; color:#888;">
+                  <span th:text="${#temporals.format(review.createdAt, 'yyyy. MM. dd')}">2025. 07. 16</span>
+                  <div style="margin-top:8px; display:flex; flex-direction:column; gap:10px;">
+                    <a th:href="@{/reviews/edit/{id}(id=${review.id})}" class="button is-small is-info">수정</a>
+                    <a th:href="@{/reviews/delete/{id}(id=${review.id})}" class="button is-small is-danger"
+                       onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <script>
+          function showTab(tabName) {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(div => div.style.display = 'none');
+
+            document.querySelector('#' + tabName).style.display = 'block';
+            const index = tabName === 'available' ? 0 : 1;
+            document.querySelectorAll('.tab-button')[index].classList.add('active');
+          }
+        </script>
+
+
+      </div>
+    </div>
+
+
+
+</div>
+
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

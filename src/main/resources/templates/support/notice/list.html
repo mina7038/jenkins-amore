@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<title>공지사항</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_header.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_footer.css}">
+	<link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+	<style>
+		.tabs.is-toggle li.is-active a {
+			background-color:#fff;
+			border:0;
+			border-bottom:3px solid #000;
+			color:#000;
+			font-weight:bold;
+			border-radius:0;
+		}
+
+        .tabs.is-toggle a {
+            border:0;
+            border-radius:0;
+        }
+
+		.tabs.is-toggle li:last-child a, .tabs.is-toggle li:first-child a {
+			border-radius:0;
+		}
+
+		.table thead th {
+		    padding: 21px 10px !important;
+		}
+
+		.table tbody td, .table thead th {
+			border-width: 0 0 1px;
+		}
+
+		input:focus, input:hover {
+			box-shadow: none !important;
+			border-color: #dbdbdb !important; /* 기본 회색 테두리 */
+		  }
+
+		.field.has-addons .control:not(:last-child) {
+			margin-right: 0px;
+		}
+		.box {
+            border-radius:0 !important;
+        }
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="common/header :: header"></th:block>
+	<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; border-bottom:1px solid #dbdbdb; margin-top:82px;" class="box has-text-centered">
+		<p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">공지사항</p>
+
+		<div class="container tabs is-toggle is-fullwidth is-centered">
+			<ul style="font-size:20px;">
+				<li><a th:href="@{/support/list}">고객센터</a></li>
+				<li class="is-active"><a th:href="@{/support/notice/list}">공지사항</a></li>
+				<li><a th:href="@{/support/qna/form}">Q&A</a></li>
+				<li><a th:href="@{/support/chat}">1:1채팅</a></li>
+			</ul>
+		</div>
+	</div>
+	<section class="section">
+		<div class="container">
+			<div class="is-flex is-justify-content-flex-end">
+				<form th:action="@{/support/notice/list}" method="get" class="mb-4">
+					<div class="field has-addons is-justify-content-end" style="border-bottom:2px solid #000; max-width:200px;">
+						<div class="control" style="margin-right:3px;">
+							<input style="border:0; box-shadow:none; padding:5px; height:30px;" class="input" type="text" name="keyword" placeholder="제목 검색"
+								   th:value="${keyword != null} ? ${keyword} : ''">
+						</div>
+						<div class="control">
+							<button type="submit">
+								<img src="/ap_img/icon_search_bar.png">
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<table class="table is-fullwidth" style="border-top:1px solid #000; border-bottom:1px solid #dbdbdb;" >
+				<thead>
+					<tr>
+						<th style="text-align:center;" scope="col">제목</th>
+						<th style="text-align:center; width:10%;" scope="col">등록일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="notice : ${notices}">
+						<td style="padding:21px 21px;"><a th:href="@{/support/notice/{id}(id=${notice.id})}" th:text="${notice.title}">공지 제목</a>
+						</td>
+						<td style="text-align:center; width:10%; padding:21px;" th:text="${#temporals.format(notice.resdate, 'yyyy.MM.dd')}"></td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<th:block th:replace="common/footer :: footer"></th:block>
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='주문/결제')}">
+	<style>
+		.icon {
+		       width: 5px;
+		       height: 5px;
+		     }
+
+		     footer {
+		       float: left;
+		       width: 100%;
+		     }
+
+		     * {
+		       padding: 0;
+		       margin: 0;
+		       box-sizing: border-box;
+		     }
+
+		     a {
+		       color: #000;
+		     }
+
+		     #wrap {
+		       width: 100%;
+		       margin: 0 auto;
+		       margin-bottom: 30px;
+		       height: auto;
+		     }
+
+		     .table td,
+		     .table th {
+		       border: 0;
+		     }
+
+		     .table td {
+		       padding: 20px 10px;
+		       vertical-align: middle;
+		     }
+
+		     .table thead td,
+		     .table thead th {
+		       border-width: 1;
+		       color: #363636;
+		     }
+
+		     .table thead th {
+		       padding: 21px 10px;
+		       font-size: 18px;
+		       font-weight: 600;
+		       border-bottom: 1px solid #ededed;
+		     }
+
+		     .table td {
+		       border-bottom: 1px solid #e5e5e5;
+		     }
+
+		     table {
+		       border-top: 1px solid #d7d5d5;
+		     }
+
+		     .order-wrap {
+		       max-width: 1380px;
+		       position: relative;
+		       margin: 0 auto;
+		     }
+
+		     .cart_tb {
+		       float: left;
+		       width: 100%;
+		     }
+
+		     .selectorder {
+		       display: flex;
+		       align-items: center;
+		     }
+
+		     .product_select {
+		       width: 25px;
+		       height: 25px;
+		       background: none;
+		       -webkit-appearance: none;
+		       border-radius: 5px;
+		       border: 1px solid #e0e0e0;
+		       margin-right: 5px;
+		       padding: 0;
+		     }
+
+		     .order_txt {
+		       font-size: 22px;
+		       font-weight: bold;
+		       letter-spacing: -1.1px;
+		       color: #000;
+		       margin-right: 15px;
+		     }
+
+		     .btn {
+		       width: 105px;
+		       height: 30px;
+		       border-radius: 4px;
+		       border: 1px solid #b4b4b4;
+		       font-size: 12.5px;
+		       font-weight: 500;
+		       color: rgba(0, 0, 0, 0.6);
+		       background: #fff;
+		       line-height: 30px;
+		       box-sizing: border-box;
+		       cursor: pointer;
+		     }
+
+		     .ec-base-button:after {
+		       display: block;
+		       content: "";
+		       clear: both;
+		     }
+
+		     .custom-checkbox {
+		       width: 25px;
+		       height: 25px;
+		       display: inline-block;
+		       border: 1px solid #e0e0e0;
+		       border-radius: 5px;
+		       cursor: pointer;
+		       background: white;
+		       margin-right: 5px;
+		     }
+
+		     input[type="checkbox"]:checked+.custom-checkbox {
+		       background: url('/ap_img/icon_check.png') #000 no-repeat center;
+		       border-color: #000;
+		     }
+
+		     .cart_notice {
+			float:left;
+		       background: #fafafa;
+		       padding: 35px 50px;
+		       font-size: 16px;
+		       color: #111;
+		       text-align: left;
+		     }
+
+		     .cart_notice li {
+		       margin: 8px 0;
+		       padding-left: 7px;
+		       position: relative;
+		     }
+
+		     .cart_notice li:before {
+		       content: '';
+		       width: 4px;
+		       height: 4px;
+		       position: absolute;
+		       top: 10px;
+		       left: 0;
+		       border-radius: 50%;
+		       background: #111;
+		     }
+
+		     .order-total {
+		       float: right;
+		       width: 26%;
+		       max-width: 360px;
+		       position: relative;
+		     }
+	</style>
+</head>
+<body>
+<div th:replace="~{common/header}"></div>
+<div id="wrap">
+	<h1 style="text-align: center; margin-top:100px; font-size:49.5px; width:100%; font-weight:bold; letter-spacing: -2.4px;"
+	          class="title">주문서 작성</h1>
+			  
+</div>
+<section class="section">
+  <div class="container">
+    <h1 class="title is-3">🧾 주문/결제</h1>
+
+    <form th:action="@{/payment/ready}" method="post">
+      <input type="hidden" name="orderType"  th:value="KakaoPay"/> <!-- single or cart -->
+      <input type="hidden" name="goodsNo" th:if="${goodsNo != null}" th:value="${goodsNo}"/>
+      <input type="hidden" name="amount" th:if="${amount != null}" th:value="${amount}"/>
+	
+
+      <div class="box">
+        <h2 class="subtitle is-5">📦 배송 정보</h2>
+
+        <div class="field">
+          <label class="label">수령인</label>
+          <div class="control">
+            <input class="input" type="text" name="receiver" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">전화번호</label>
+          <div class="control">
+            <input class="input" type="tel" name="tel" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">우편 번호</label>
+          <div class="control">
+            <input class="input" type="text" name="postCode" id="zipCode" readonly onclick="execDaumPostcode()" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">도로명 주소</label>
+          <div class="control">
+            <input class="input" type="text" name="addr1" id="streetAdr" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">상세 주소</label>
+          <div class="control">
+            <input class="input" type="text" name="addr2" id="detailAdr" onclick="addrCheck()" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">요청사항</label>
+          <div class="control">
+            <textarea class="textarea" name="request" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-grouped is-grouped-right">
+        <p class="control">
+          <button class="button is-primary">카카오페이로 결제하기</button>
+        </p>
+      </div>
+    </form>
+      <!-- 다음 주소 API -->
+      <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+      <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    document.getElementById("zipCode").value = data.zonecode;
+                    document.getElementById("streetAdr").value = data.roadAddress;
+                }
+            }).open();
+        }
+        function addrCheck() {
+            const zip = document.getElementById("zipCode").value;
+            const street = document.getElementById("streetAdr").value;
+            if (!zip && !street) {
+                alert("우편번호를 클릭하여 주소를 검색해주세요.");
+                document.getElementById("zipCode").focus();
+            }
+        }
+
+      </script>
+  </div>
+</section>
+
+<footer th:replace="~{common/footer}"></footer>
+</body>
+</html>

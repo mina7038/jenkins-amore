@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta th:if="${_csrf != null}" name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:if="${_csrf != null}" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아모레퍼시픽</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_header.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_footer.css}">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+
+    <style>
+
+        a {
+        text-decoration:none;
+        color:#000;
+        }
+
+        .main_brand_section {
+            color: #000;
+            margin-top: 170px;
+            margin-bottom: 170px;
+        }
+
+        .main_brand_title {
+            font-size: 36px;
+            line-height: 1.11;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .main_brand_itembox {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .main_brand_item_imgbox {
+            position: relative;
+        }
+
+        .eco_img {
+            border-radius: 9px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_brand_item_imgbox>.logo2 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .main_brand_item {
+          width: calc(25% - 11.25px); /* gap 고려 (4개일 때) */
+        }
+
+        @media (max-width: 1260px) {
+          .main_brand_item {
+            width: calc(50% - 7.5px); /* 2개 한 줄일 때 */
+          }
+        }
+
+        .main_brand_item_textbox h5 {
+            font-size: 20px;
+            line-height: 1.2;
+            color: #000;
+            padding: 22px 0 14px;
+            font-weight: 600;
+        }
+
+        .main_brand_linebox {
+            width: 100%;
+            height: 1px;
+            margin-top: 22px;
+            position: relative;
+        }
+
+        .main_brand_line {
+            background: #000;
+            opacity: 0.1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_brand_line_hover {
+            background: #000;
+            opacity: 0.7;
+            width: 0;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 0.5s;
+            z-index: 1;
+        }
+
+        .main_brand_item:hover .main_brand_line_hover {
+            background-color: #000;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main_brand_item:hover .main_brand_item_imgbox .logo2 {
+            opacity: 1;
+        }
+
+        swiper-slide img {
+            width: 100%;
+            height: 502px;
+        }
+
+        .keyword-btn {
+            background-color: #eee;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: 0.3s;
+            margin-bottom:10px;
+        }
+
+        .keyword-btn:hover {
+            background-color: #ddd;
+        }
+
+        .keyword-btn.active {
+            background-color: #000;
+            color: white;
+        }
+
+        .register-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #0056c0;
+        }
+
+
+
+        /* 🔸 키워드 버튼 */
+        .keyword-btn {
+            background-color: #eee;
+            padding: 10px 0;
+            /* 상하 패딩 줄이고 좌우 제거 */
+            width: 185px;
+            /* 고정 너비로 버튼 통일감 */
+            /* 가운데 정렬 */
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .keyword-btn:hover {
+            background-color: #ddd;
+        }
+
+        .keyword-btn.active {
+            background-color: #000;
+            color: white;
+        }
+
+        /* 🔸 상품 카드 내부 텍스트 */
+        .product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100% !important;
+    width: 100% !important;
+}
+
+
+        .product-card img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+        }
+
+        .product-card .brand {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .product-card .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .product-card .price-box {
+            margin-top: 8px;
+        }
+
+        .product-card .discount {
+            color: orange;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 6px;
+        }
+
+        .product-card .price {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .product-card .original-price {
+            color: #aaa;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .product-card .cart-btn {
+            margin-top: 14px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product-card .cart-btn:hover {
+            background-color: #eee;
+        }
+
+        .keyword-btn.active,
+        .keyword-btn:hover {
+            color: #fff;
+        }
+
+        .keyword-btn.sulwhasoo:hover,
+        .keyword-btn.sulwhasoo.active {
+            background-color: #d94b1d;
+        }
+
+        .keyword-btn.ayunche:hover,
+        .keyword-btn.ayunche.active {
+            background-color: #c5c5c5;
+        }
+
+        .keyword-btn.illiyoon:hover,
+        .keyword-btn.illiyoon.active {
+            background-color: #49a6f1;
+        }
+
+        .keyword-btn.osulloc:hover,
+        .keyword-btn.osulloc.active {
+            background-color: #007a5c;
+        }
+
+        .brand-goods-wrapper {
+            display: flex;
+            margin-top: 100px;
+            padding-bottom: 100px;
+        }
+
+        .brand-product-layout {
+            display: flex;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 40px;
+            align-items: flex-start;
+        }
+
+        /* 왼쪽 버튼 영역 */
+        .keyword-filter {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width:100%;
+        }
+
+
+        .register-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #0056c0;
+        }
+
+        .keyword-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+
+
+        #banner-slider ul li {
+            margin-left: 20px;
+            overflow: hidden;
+        }
+
+        .text-box {
+            z-index: 3333;
+            position: absolute;
+            top: 50%;
+            /* 수직 가운데 */
+            left: 25%;
+            /* 수평 가운데 */
+            transform: translate(-50%, -50%);
+            color: #000;
+            padding: 20px 40px;
+            border-radius: 10px;
+        }
+
+        .text-box h3 {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .text-box p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .text-box2 {
+            z-index: 3333;
+            position: absolute;
+            top: 50%;
+            /* 수직 가운데 */
+            right: -10%;
+            /* 수평 가운데 */
+            transform: translate(-50%, -50%);
+            color: #000;
+            text-align: right;
+            padding: 20px 40px;
+            border-radius: 10px;
+        }
+
+        .text-box2 h3 {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .text-box2 p {
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 7777;
+            border-radius: 100%;
+            transform: translateY(-50%);
+            transition: 0.3s;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        img {
+            max-width: 100%;
+            vertical-align: top;
+        }
+
+        .prev {
+            left: 140px;
+        }
+
+        .next {
+            right: 140px;
+        }
+
+        .prev>img {
+            transform: rotate(180deg) translateX(2px);
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .text-box h6 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .text-box2 h6 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .brandnew {
+    display: flex;
+    align-items: flex-start;
+    max-width: 1448px;
+    margin: 0 auto;
+}
+.keyword-filter {
+    width:350px;
+    min-width: 350px;
+    flex-shrink: 0;
+}
+.brand-goods-wrapper {
+    flex-grow: 1;
+}
+
+.card-img, .card-img-top {
+    border-radius:0 !important;
+}
+
+        @media (max-width:991px) {
+            .brandnew {
+                flex-direction:column
+            }
+            .keyword-filter {
+                margin-bottom:0 !important;
+                width:100%;
+
+            }
+            .brand-goods-wrapper {
+                margin-top:30px;
+            }
+            .brandnew-btn {
+                display:flex;
+                gap:10px;
+                align-items: center;
+                justify-content: center;
+            }
+            .brandnew-title, .best-title {
+                text-align:center !important;
+            }
+           .product-card, .card {
+            background-color:transparent;
+           }
+
+        }
+
+    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    swiper-container {
+  width: 100%;
+  height: auto;
+  --swiper-pagination-bullet-inactive-color: #fff;
+      --swiper-pagination-bullet-inactive-opacity: 0.5;
+      --swiper-pagination-color: #000; /* ✅ active bullet color */
+}
+
+swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000; /* 또는 #fff, 사진 없을 때 대비 */
+}
+
+swiper-slide img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+
+    </style>
+</head>
+
+<body class="main-page">
+<th:block th:replace="common/header :: header"></th:block>
+<div id="wrap">
+    <div id="container">
+        <div id="contents">
+            <div class="section_wrap">
+                <swiper-container
+                        class="mySwiper"
+                        space-between="0"
+                        slides-per-view="1"
+                        pagination="true"
+                        pagination-clickable="true"
+                        loop="true"
+                        autoplay-delay="5000"
+                        speed="1000"
+                        autoplay-disable-on-interaction="false"
+                        autoplay="true">
+                    <swiper-slide><img src="/ap_img/1920x970_4_1.jpg"></swiper-slide>
+                    <swiper-slide><img src="/ap_img/brands_ayunche_03.jpg"></swiper-slide>
+                    <swiper-slide><img src="/ap_img/1920x1110.jpg"></swiper-slide>
+                    <swiper-slide><img src="/ap_img/pc_brands_img_osulloc_1920.jpg"></swiper-slide>
+                </swiper-container>
+                <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+  const swiperEl = document.querySelector('swiper-container');
+
+  function resetSwiper() {
+    // 슬라이드 복제 제거 및 초기화
+    swiperEl.removeAttribute('init'); // Swiper 요소 재생성
+    const newEl = swiperEl.cloneNode(true);
+    swiperEl.replaceWith(newEl);
+  }
+
+  // 최초 실행
+  resetSwiper();
+
+  // 화면 리사이즈 시 슬라이드 재초기화
+  window.addEventListener('resize', () => {
+    resetSwiper();
+  });
+});
+                </script>
+
+                <section class="container" style="max-width: 1448px; margin:0 auto; margin-top:100px;">
+                    <h2 class="mb-4 best-title" style="font-weight: bold; font-size: 34px; color: #000;">인기상품 랭킹</h2>
+
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+                        <div class="col" th:each="goods, iterStat : ${popularGoods}">
+                            <div class="card h-100 position-relative" style="border:0; border-radius:0;">
+                <span class="position-absolute top-0 start-0 bg-dark text-white px-3 py-2 rounded-bottom-end fw-bold"
+                      style="z-index: 10;">
+                    [[${iterStat.index + 1}]]
+                </span>
+                                <a th:href="@{/goods/detail/{no}(no=${goods.no})}">
+                                    <img th:src="@{'/uploads/' + ${goods.img1}}" class=""
+                                         style="height: 100%; width:100%; object-fit: cover;" alt="인기상품 이미지">
+                                </a>
+                                <div class="card-body d-flex flex-column justify-content-between" style="padding:0;">
+                                    <p style="margin:0; margin-top:10px; font-size:14px; color:#999999;" class="card-text fw-bold"
+                                       th:text="${goods.brand}">브랜드명</p>
+                                    <h5 style="font-weight:bold; font-size:16px; margin:0;" class="card-title"
+                                        th:text="${goods.gname}">상품명</h5>
+                                    <div class="text-muted mb-2" style="font-size: 12px;"
+                                         th:text="${goods.comment}">설명
+                                    </div>
+                                    <div class="price-box">
+										<span style="color:red; font-size:20px; font-weight:bold;" class="discount"
+                                              th:if="${goods.discount > 0}"
+                                              th:text="${goods.discount} + '%'">30%</span>
+                                        <span class="price" style="font-weight:bold; font-size:18px;"
+                                              th:text="${#numbers.formatInteger(goods.price2, 3, 'COMMA')} + '원'">할인가</span>
+                                        <del style="color:gray; font-size:14px;" class="original-price"
+                                             th:if="${goods.discount > 0}"
+                                             th:text="${#numbers.formatInteger(goods.price1, 3, 'COMMA')} + '원'">정가
+                                        </del>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <div style="max-width:1462px; width:100%; margin: 0 auto; margin-top:150px;" class="middle-banner">
+                    <a href="#">
+                        <img style="width:100%; height:100%; border-radius: 10px;" src="/ap_img/mini-banner.jpg">
+                    </a>
+                </div>
+
+                <div style="width:100%; background-color:#f3f3f3; padding:120px 0 100px 0; margin-top:100px;">
+                    <section class="container" style="max-width:1448px; margin:0 auto;">
+                        <div class="row">
+                            <!-- 왼쪽: 브랜드 버튼 -->
+                            <div class="col-lg-3 col-12 mb-4">
+                                <h2 class="brandnew-title"
+                                    style="color:#000; font-weight:bold; font-size: 34px; margin-bottom:20px;">
+                                    브랜드별 추천 제품</h2>
+                                <div class="d-flex flex-row flex-lg-column justify-content-center justify-content-lg-start align-items-center align-items-lg-start gap-3">
+                                    <button style="margin:0;" class="keyword-btn sulwhasoo" onclick="filterBrand('설화수')">설화수</button>
+                                    <button style="margin:0;"  class="keyword-btn ayunche" onclick="filterBrand('아윤채')">아윤채</button>
+                                    <button style="margin:0;"  class="keyword-btn illiyoon" onclick="filterBrand('일리윤')">일리윤</button>
+                                    <button style="margin:0;"  class="keyword-btn osulloc" onclick="filterBrand('오설록')">오설록</button>
+                                </div>
+
+                            </div>
+
+                            <!-- 오른쪽: 브랜드 상품 목록 -->
+                            <div class="col-lg-9 col-12">
+                                <div class="row" id="brandGoods">
+                                    <div th:each="goods : ${goodsList}"
+                                         class="col-md-4 col-sm-6 col-12 mb-4"
+                                         th:attr="data-brand=${goods.brand}"
+                                         style="display:none;">
+                                        <div class="product-card goods-item">
+                                            <a th:href="@{/goods/detail/{no}(no=${goods.no})}" class="text-decoration-none text-dark d-block">
+                                                <div class="card border-0 h-100" style="background-color:transparent;">
+                                                    <img th:src="@{'/uploads/' + ${goods.img1}}" class="card-img-top"
+                                                         alt="상품 이미지" style="height: 345px; object-fit: cover;">
+                                                    <div style="padding:0;" class="card-body">
+                                                        <div style="margin-top:10px;" class="brand fw-bold" th:text="${goods.brand}">브랜드</div>
+                                                        <div class="title fw-semibold" th:text="${goods.gname}" style="font-size:16px; margin:0;">상품명</div>
+                                                        <div class="text-muted mb-2" style="font-size: 12px;" th:text="${goods.comment}">설명</div>
+                                                        <div class="price-box d-flex align-items-baseline gap-1">
+                                                            <span style="font-size:20px; color:#ff0000; font-weight:bold;"
+                                                                  th:if="${goods.discount > 0}" th:text="${goods.discount} + '%'">30%</span>
+                                                            <span style="font-size:18px; font-weight:bold;" class="text-dark"
+                                                                  th:text="${#numbers.formatInteger(goods.price2, 3, 'COMMA')} + '원'">할인가</span>
+                                                            <del style="font-size:14px;" class="text-muted"
+                                                                 th:if="${goods.discount > 0}"
+                                                                 th:text="${#numbers.formatInteger(goods.price1, 3, 'COMMA')} + '원'">정가</del>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+                <script>
+                    function filterBrand(brand) {
+  const items = document.querySelectorAll('#brandGoods > .col-md-4');
+  items.forEach(item => {
+    const isMatch = !brand || item.getAttribute('data-brand') === brand;
+    item.style.display = isMatch ? 'block' : 'none';
+  });
+
+  // 버튼 active 효과 갱신
+  document.querySelectorAll('.keyword-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent.trim() === brand) {
+      btn.classList.add('active');
+    }
+  });
+}
+                </script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // 페이지 로딩 시 기본 브랜드로 '설화수' 필터 적용
+                        filterBrand('설화수');
+
+                        // 버튼 스타일 활성화
+                        const defaultBtn = [...document.querySelectorAll('button')].find(btn => btn.textContent.trim() === '설화수');
+                        if (defaultBtn) {
+                            defaultBtn.classList.add('active');
+                        }
+                    });
+                </script>
+                <section style="margin:0 auto; max-width:1424px; margin-top:100px; padding-bottom:100px;" class="main_brand_section">
+                    <h2 style="margin-bottom:20px;" class="main_brand_title">BRAND</h2>
+                    <ul class="main_brand_itembox" style="padding:0;">
+                        <li class="main_brand_item">
+                            <a href="/intro/sul">
+                                <div class="main_brand_item_imgbox">
+                                    <img class="eco_img" src="/ap_img/sul_item.jpg">
+                                    <img class="logo2" src="/ap_img/sulwhasoo_logo.png">
+                                </div>
+                                <div class="main_brand_item_textbox">
+                                    <h5>설화수</h5>
+                                    <p></p>
+                                </div>
+                                <div class="main_brand_linebox">
+                                    <div class="main_brand_line"></div>
+                                    <div class="main_brand_line_hover"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="main_brand_item">
+                            <a href="/intro/ay">
+                                <div class="main_brand_item_imgbox">
+                                    <img class="eco_img" src="/ap_img/ay_item.png">
+                                    <img class="logo2" src="/ap_img/ayooncha_logo.png">
+                                </div>
+                                <div class="main_brand_item_textbox">
+                                    <h5>아윤채</h5>
+                                    <p></p>
+                                </div>
+                                <div class="main_brand_linebox">
+                                    <div class="main_brand_line"></div>
+                                    <div class="main_brand_line_hover"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="main_brand_item">
+                            <a href="/intro/il">
+                                <div class="main_brand_item_imgbox">
+                                    <img class="eco_img" src="/ap_img/il_item.jpg">
+                                    <img style="width:220px;" class="logo2" src="/ap_img/illiyoon_logo.jpg">
+                                </div>
+                                <div class="main_brand_item_textbox">
+                                    <h5>일리윤</h5>
+                                    <p></p>
+                                </div>
+                                <div class="main_brand_linebox">
+                                    <div class="main_brand_line"></div>
+                                    <div class="main_brand_line_hover"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="main_brand_item">
+                            <a href="/intro/os">
+                                <div class="main_brand_item_imgbox">
+                                    <img class="eco_img" src="/ap_img/os_item.png">
+                                    <img style="height:200px;" class="logo2" src="/ap_img/osulloc_logo2.png">
+                                </div>
+                                <div class="main_brand_item_textbox">
+                                    <h5>오설록</h5>
+                                    <p></p>
+                                </div>
+                                <div class="main_brand_linebox">
+                                    <div class="main_brand_line"></div>
+                                    <div class="main_brand_line_hover"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="common/footer :: footer"></th:block>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(".keyword-btn");
+        const productList = document.getElementById("product-list");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                const brand = this.innerText.trim();
+
+                // 모든 버튼 active 해제
+                buttons.forEach(btn => btn.classList.remove("active"));
+                this.classList.add("active");
+
+                fetch(`/product/api/products?brand=${brand}`)
+                    .then(response => response.json())
+                    .then(products => {
+                        const html = products.map(p => `
+              <div class="product-card">
+                <img src="${p.thumbPath}" alt="product image">
+                <div class="brand">${p.brand}</div>
+                <div class="title">${p.title}</div>
+                <div class="price-box">
+                  <span class="discount">${p.discountRate}%</span>
+                  <span class="price">${p.priceFinal}원</span><br>
+                  <del class="original-price">${p.priceOriginal}원</del>
+                </div>
+                <button class="cart-btn">🛒 담기</button>
+              </div>
+            `).join("");
+                        productList.innerHTML = html;
+                    });
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>

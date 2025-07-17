@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='마이페이지')}"></head>
+<body>
+<style>
+    .active {
+      display:block;
+      color: #000;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .active:before {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+    }
+</style>
+<div th:replace="~{common/header}"></div>
+
+<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; margin-top:82px;" class="box has-text-centered">
+    <p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">마이페이지</p>
+
+    <div class="mypage-box" style="display:flex; max-width:1380px; margin:0 auto;">
+        <div class="mypage-bar" style="width:100%; max-width:300px;">
+            <ul style="text-align:left; padding:0;">
+                <li style="margin-bottom:20px; font-size:17px;"><a class="active" th:href="@{/member/mypage}">주문내역</a>
+                </li>
+                <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/reviews/my}">상품후기</a>
+                </li>
+                <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;"
+                                                                   th:href="@{/support/qna/list}">1:1문의</a></li>
+                <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/member/edit}">회원정보
+                    수정</a></li>
+            </ul>
+        </div>
+        <div style="width:100%;">
+            <div style="border-bottom: 1px solid #000; width:100%; display:flex; justify-content:space-between;">
+                <p style="font-weight:bold; text-align:left; color:#000; margin:0; font-size:22px;">최근 주문 정보</p>
+                <p>
+                    <a href="/orders/mypage" class="button" style="font-weight: 500;
+    letter-spacing: -0.63px;
+    color: rgba(0, 0, 0, 0.6);
+    width: 118px;
+    height: 30px;
+    border-radius: 4px;
+    border: solid 1px #b4b4b4;
+    line-height: 30px;">주문내역 더보기</a>
+                </p>
+            </div>
+            <div style="overflow-x:auto;">
+                <table style="width:100%;">
+                    <thead>
+                    <tr style="border-bottom:1px solid #dbdbdb;">
+                        <th style="padding:20px; vertical-align:middle; width:20%;">날짜/주문번호</th>
+                        <th style="padding:20px; vertical-align:middle;">상품명</th>
+                        <th style="padding:20px; vertical-align:middle; white-space:nowrap;">수량</th>
+                        <th style="padding:20px; vertical-align:middle; width:15%; white-space:nowrap;">결제금액</th>
+                        <th style="padding:20px; vertical-align:middle; width:15%; white-space:nowrap;">상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="order : ${recentOrders}" style="border-bottom:1px solid #dbdbdb;">
+                        <td style="vertical-align:middle; padding:15px;">
+                            <p style="margin:0; font-size: 15px;"
+                               th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd')}">2025-07-02</p>
+                            <a th:href="@{/orders/detail/{id}(id=${order.id})}"
+                               style="text-decoration: none; color: inherit; ">
+                                <p style="margin:0; text-decoration:underline; font-size: 15px; letter-spacing:-1px;"
+                                   th:text="'[' + ${order.orderId} + ']'">[ORDER_123456]</p>
+                            </a>
+                        </td>
+                        <td style="vertical-align:middle; padding:15px; text-align:left; white-space:nowrap;">
+                            <a th:href="@{/orders/detail/{id}(id=${order.id})}"
+                               style="text-decoration: none; color: inherit; font-size: 15px; ">
+                                <span th:each="item, stat : ${order.items}" th:if="${stat.index == 0}"
+                                      th:text="${item.goods.gname}">상품명</span>
+                                <span th:if="${order.items.size() > 1}"> 외 <span
+                                        th:text="${order.items.size() - 1}"></span>건</span>
+                            </a>
+                        </td>
+                        <td style="vertical-align:middle; padding:15px;"
+                            th:text="${#numbers.formatInteger(order.totalQuantity, 0)}">1
+                        </td>
+                        <td style="vertical-align:middle; padding:15px; font-size: 15px; "
+                            th:text="|${#numbers.formatInteger(order.totalAmount, 0, 'COMMA')}원|">27,000원
+                        </td>
+                        <td style="vertical-align:middle; padding:15px; font-size: 15px; white-space:nowrap;">
+                          <span th:switch="${#strings.toUpperCase(order.status.name())}">
+                            <span th:case="'READY'" class="tag is-warning">결제 대기</span>
+                            <span th:case="'PAID'" class="tag is-success">결제 완료</span>
+                            <span th:case="'CANCELLED'" class="tag is-light">취소됨</span>
+                            <span th:case="'FAILED'" class="tag is-danger">결제 실패</span>
+                          </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

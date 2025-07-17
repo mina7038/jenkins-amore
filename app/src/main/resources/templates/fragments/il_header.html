@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Page Title</title>
+</head>
+
+<body>
+	<div id="login-check" style="display: none;" th:if="${session.illoginMember != null}"></div>
+	<header id="il_header" class="il_header" th:fragment="il_header">
+		<div class="top-ban-wrap">
+			<!-------------띠 배너---------------->
+			<div class="morenvy-banner-area init" area_id="fecd">
+				<div class="morenvy-banner marquee">
+					<a class="marquee-wrap" href="" target="_self" style="cursor: default;">
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+						<span class="marquee-txt">민감한 세상의 모든 것을 연구합니다&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한국인 민감 피부 연구의
+							시작과 끝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;민감한 피부고민에 대한 순하고 강력한 답.</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="inner">
+			<div class="left">
+				<a href="#" class="menu-btn" title="전체 메뉴 열기">
+					<div class="menu-ham">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</a>
+				<h1 class="screen-ir">일리윤 공식몰 | ILLIYOON</h1>
+				<div class="xans-element- xans-layout xans-layout-logotop top_logo head-logo">
+					<a href="/il"><img src="/il_img/toplogo.jpg" alt="일리윤직영몰"></a>
+				</div>
+			</div>
+			<div class="il_nav">
+				<div class="il_nav1">
+					<div class="il_nav2">
+						<ul>
+							<li><a href="/il/goods/list">BEST</a></li>
+							<li><a href="#">유형별</a></li>
+							<li><a href="#">라인별</a></li>
+							<li><a href="#">피부고민별</a></li>
+							<li><a href="#">선물하기</a></li>
+							<li><a href="#">이벤트</a></li>
+							<li><a href="#">일리윤 스토리</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				<a href="#" class="illiyoon-story"><span>일리윤 스토리</span></a>
+				<ul class="top_mypage">
+					<li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+								<g id="그룹_841" data-name="그룹 841" transform="translate(-1722 -76)">
+									<rect id="사각형_172" data-name="사각형 172" width="40" height="40"
+										transform="translate(1722 76)" fill="#ffb7b7" opacity="0"></rect>
+									<g id="_01_align_center" data-name="01 align center"
+										transform="translate(1730.032 84.032)">
+										<path id="패스_74" data-name="패스 74"
+											d="M24,22.586l-6.262-6.262a10.016,10.016,0,1,0-1.414,1.414L22.586,24ZM10,18a8,8,0,1,1,8-8,8,8,0,0,1-8,8Z"
+											fill="#111"></path>
+									</g>
+								</g>
+							</svg></a></li>
+					<li><a href="/il/member/mypage"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+								viewBox="0 0 40 40">
+								<g id="그룹_840" data-name="그룹 840" transform="translate(-1776 -76)">
+									<rect id="사각형_171" data-name="사각형 171" width="40" height="40"
+										transform="translate(1776 76)" fill="#ffb7b7" opacity="0"></rect>
+									<g id="그룹_658" data-name="그룹 658" transform="translate(5.5 -1)">
+										<g id="타원_16" data-name="타원 16" transform="translate(1783.5 84)" fill="none"
+											stroke="#111" stroke-width="2">
+											<circle cx="7" cy="7" r="7" stroke="none"></circle>
+											<circle cx="7" cy="7" r="6" fill="none"></circle>
+										</g>
+										<path id="패스_76" data-name="패스 76"
+											d="M.5,11.194A10.851,10.851,0,0,1,11.5.5a10.851,10.851,0,0,1,11,10.695"
+											transform="translate(1779 99.501)" fill="none" stroke="#111"
+											stroke-miterlimit="10" stroke-width="2"></path>
+									</g>
+								</g>
+							</svg></a></li>
+
+
+					<script>
+						function checkLoginBeforeGoCart() {
+							const isLoggedIn = document.getElementById('login-check') !== null;
+
+							if (!isLoggedIn) {
+								alert("로그인이 필요합니다.");
+								location.href = "/il/member/login";
+							} else {
+								location.href = "/il/cart/list";
+							}
+						}
+					</script>
+
+					<li><a href="javascript:void(0);" onclick="checkLoginBeforeGoCart()"><svg
+								xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+								<g id="그룹_817" data-name="그룹 817" transform="translate(-1830 -76)">
+									<rect id="사각형_170" data-name="사각형 170" width="40" height="40"
+										transform="translate(1830 76)" fill="#ffb7b7" opacity="0"></rect>
+									<g id="_01_align_center" data-name="01 align center" transform="translate(1838 84)">
+										<path id="합치기_1" data-name="합치기 1"
+											d="M-2140-8338a3,3,0,0,1-3-3v-15h6a6,6,0,0,1,6-6,6,6,0,0,1,6,6h6v15a3,3,0,0,1-3,3Zm-1-3a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1v-13h-4v2a1,1,0,0,1-1,1,1,1,0,0,1-1-1v-2h-8v2a1,1,0,0,1-1,1,1,1,0,0,1-1-1v-2h-4Zm6-15h8a4,4,0,0,0-4-4A4,4,0,0,0-2135-8356Z"
+											transform="translate(2143 8362)" fill="#111"></path>
+									</g>
+								</g>
+							</svg></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="il_navsub">
+			<div class="side-top">
+				<div class="top-area">
+					<div class="xans-element- xans-layout xans-layout-logotop top_logo logo "><a href="/il"><img
+								src="/il_img/toplogo.jpg" alt="일리윤직영몰"></a>
+					</div>
+					<button type="button" class="btnClose"><img src="/il_img/delete-1.svg" alt="닫기"></button>
+				</div>
+				<div class="member-area">
+					<ul>
+						<li class="xans-element- xans-layout xans-layout-statelogoff login "
+							th:if="${session.illoginMember == null}">
+							<a href="/il/member/login" id="member_form_7163176410">로그인</a>
+						</li>
+						<li class="xans-element- xans-layout xans-layout-statelogoff login "
+							th:if="${session.illoginMember != null}">
+							<a href="/il/member/mypage" id="member_form_7163176410">마이페이지</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="il_navsub__in">
+				<ul class="navsub">
+					<li class="navsub-box best">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="/il/goods/list">BEST</a></li>
+						</ul>
+					</li>
+					<li class="navsub-box">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="#">유형별</a>
+								<div class="cate"><img src="/il_img/arrow-bottom-9.svg" alt=""></div>
+							</li>
+							<li class="small_item"><a href="#">바디보습</a></li>
+							<li class="small_item"><a href="#">바디세정</a></li>
+							<li class="small_item"><a href="#">클렌징</a></li>
+							<li class="small_item"><a href="#">스킨케어</a></li>
+							<li class="small_item"><a href="#">선케어</a></li>
+							<li class="small_item"><a href="#">여성청결제</a></li>
+							<li class="small_item"><a href="#">기타</a></li>
+						</ul>
+					</li>
+					<li class="navsub-box line">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="#">라인별</a>
+								<div class="cate"><img src="/il_img/arrow-bottom-9.svg" alt=""></div>
+							</li>
+							<li class="small_item"><a href="#">세라마이드아토</a></li>
+							<li class="small_item"><a href="#">울트라리페어</a></li>
+							<li class="small_item"><a href="#">레드이치</a></li>
+							<li class="small_item"><a href="#">프레쉬모이스춰</a></li>
+							<li class="small_item"><a href="#">아크네클리어</a></li>
+							<li class="small_item"><a href="#">임산부 튼살크림</a></li>
+							<li class="small_item"><a href="#">세라마이드더마</a></li>
+							<li class="small_item"><a href="#">히알루론모이스춰</a></li>
+							<li class="small_item"><a href="#">프로바이오틱스</a></li>
+							<li class="small_item"><a href="#">선케어</a></li>
+							<li class="small_item"><a href="#">바디기타</a></li>
+						</ul>
+					</li>
+					<li class="navsub-box skin">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="#">피부고민별</a>
+								<div class="cate"><img src="/il_img/arrow-bottom-9.svg" alt=""></div>
+							</li>
+							<li class="small_item"><a href="#">가려움</a></li>
+							<li class="small_item"><a href="#">더마</a></li>
+							<li class="small_item"><a href="#">고보습</a></li>
+							<li class="small_item"><a href="#">트러블진정</a></li>
+							<li class="small_item"><a href="#">모든피부</a></li>
+							<li class="small_item"><a href="#">임산부</a></li>
+							<li class="small_item"><a href="#">수분</a></li>
+							<li class="small_item"><a href="#">여성청결</a></li>
+							<li class="small_item"><a href="#">선케어</a></li>
+							<li class="small_item"><a href="#">기타</a></li>
+						</ul>
+					</li>
+					<li class="navsub-box gift">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="#">선물하기</a></li>
+						</ul>
+					</li>
+					<li class="navsub-box event">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="#">이벤트</a>
+								<div class="cate"><img src="/il_img/arrow-bottom-9.svg" alt=""></div>
+							</li>
+							<li class="small_item"><a href="#">이벤트</a></li>
+							<li class="small_item"><a href="/il/notice/list">공지사항</a></li>
+							<li class="small_item"><a href="/il/qna/list">문의</a></li>
+						</ul>
+					</li>
+					<li class="navsub-box story">
+						<ul class="navsub_box__ul">
+							<li class="big_item"><a class="text" href="#">일리윤 스토리</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<div class="side-bottom">
+				<ul class="munu-list" role="navigation">
+					<li class="xans-element- xans-layout xans-layout-statelogoff "><a data-ez-item="join"
+							href="/il/member/join">회원가입</a>
+					</li>
+					<li><a href="#">고객센터</a></li>
+				</ul>
+			</div>
+		</div>
+
+	</header>
+
+
+</body>
+
+</html>

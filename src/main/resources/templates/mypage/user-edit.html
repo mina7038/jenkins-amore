@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='마이페이지')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+<style>
+  .active:before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #000;
+    border-radius: 50%;
+  }
+</style>
+
+<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; margin-top:82px;" class="box has-text-centered">
+  <p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">회원 정보 수정</p>
+  <div class="mypage-box" style="display:flex; max-width:1380px; margin:0 auto;">
+    <div class="hide" style="width:100%; max-width:300px;">
+      <ul style="text-align:left; padding:0;">
+        <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/member/mypage}">주문내역</a></li>
+        <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/reviews/my}">상품후기</a></li>
+        <li style="margin-bottom:20px; font-size:17px;"><a style="color:#0000006b;" th:href="@{/support/qna/list}">1:1문의</a></li>
+        <li style="margin-bottom:20px; font-size:17px;"><a class="active" style="display:block; color: #000; position: relative; padding-left: 15px;" th:href="@{/member/edit}">회원정보 수정</a></li>
+      </ul>
+    </div>
+    <div style="width:100%;">
+      <p style="text-align:left; margin:0; padding-bottom:10px; border-bottom:1px solid #000; width:100%; font-size:20px; margin-bottom:10px;" class="title is-5">기본 정보</p>
+      <form th:action="@{/member/edit}" method="post" th:object="${member}">
+        <input type="hidden" th:field="*{id}" />
+
+        <table class="table is-fullwidth">
+          <tbody>
+          <tr>
+            <th style="vertical-align:middle; border:0;">아이디</th>
+            <td style=" border:0;">
+              <input class="input" style="height:60px;" type="text" th:field="*{username}" readonly>
+            </td>
+          </tr>
+          <tr>
+            <th style="vertical-align:middle; border:0;">이름</th>
+            <td style=" border:0;">
+              <input class="input" style="height:60px;" type="text" th:field="*{name}" readonly>
+            </td>
+          </tr>
+          <tr>
+            <th style="vertical-align:middle; border:0;">이메일</th>
+            <td style=" border:0;">
+              <input class="input" style="height:60px;" type="email" th:field="*{email}" required>
+            </td>
+          </tr>
+          <tr>
+            <th style="vertical-align:middle; border:0;">연락처</th>
+            <td style="border:0;">
+              <div style="display: flex; gap: 10px;">
+                <input class="input" type="text" id="tel1" name="tel1" maxlength="3"
+                       placeholder="010" th:value="${tel1}" style="width: 80px; height:60px;">
+
+                <input class="input" type="text" id="tel2" name="tel2" maxlength="4"
+                       placeholder="1234" th:value="${tel2}" style="width: 100px; height:60px;">
+
+                <input class="input" type="text" id="tel3" name="tel3" maxlength="4"
+                       placeholder="5678" th:value="${tel3}" style="width: 100px; height:60px;">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th style="vertical-align:middle; border:0;">주소</th>
+            <td style="border: 0;">
+              <!-- ✅ 우편번호 입력칸 (자동입력용) -->
+              <div class="mb-2" style="display: flex; gap: 10px;">
+                <input class="input" type="text" id="zipcode" th:field="*{postcode}" placeholder="우편번호" style="height:60px; width: 200px;" readonly>
+                <button style="height:60px; background-color:#000;" type="button" class="button is-dark" onclick="execDaumPostcode()">주소 찾기</button>
+              </div>
+
+              <!-- ✅ 기본 주소 입력 (도로명 주소) -->
+              <div class="mb-2">
+                <input class="input" type="text" id="addr1" th:field="*{addr1}" placeholder="기본 주소" style="height:60px;" readonly>
+              </div>
+
+              <!-- ✅ 상세 주소 입력 -->
+              <div>
+                <input class="input" type="text" th:field="*{addr2}" placeholder="상세 주소" style="height:60px;">
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+          function execDaumPostcode() {
+            new daum.Postcode({
+              oncomplete: function(data) {
+                // 우편번호와 주소 데이터를 입력
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById('addr1').value = data.roadAddress;
+                // 상세 주소 입력창으로 포커스 이동
+                document.querySelector('[name="addr2"]').focus();
+              }
+            }).open();
+          }
+        </script>
+
+        <div class="field is-grouped is-grouped-center mt-4">
+          <div class="control">
+            <button style="height:54px; width:200px; background-color:#000;" class="button is-dark" type="submit">저장하기</button>
+          </div>
+          <div class="control">
+            <a th:href="@{/member/mypage}" class="button" style="height:54px; width:200px; text-align:center; line-height:50px; border:1px solid #000; background-color:#fff; ">취소</a>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

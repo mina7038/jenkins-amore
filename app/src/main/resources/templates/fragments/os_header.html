@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <title>오설록 스타일 헤더</title>
+	</head>
+	<body>
+		<div th:fragment="header">
+
+	 
+	  <header class="os-header">
+		<div class="top-banner">
+		    오설록몰 가입하고 10% 쿠폰 받으세요
+		  </div>
+		 
+	    <div class="global-wrap">
+	      <div class="os-header-inner">
+	        <div class="os-logo">
+				<a href="/os">
+	          <img src="/os_img/os-logo.webp" alt="OSULLOC" />
+				</a>
+	        </div>
+
+	        <nav class="os-nav">
+	          <ul class="main-menu">
+	            <li class="dropdown1"><a href="#">제품</a></li>
+	            <li><a href="#" class="point">감사의 달</a></li>
+	            <li><a href="#">기프트</a></li>
+	            <li class="dropdown2"><a href="#">브랜드</a></li>
+	            <li class="dropdown3"><a href="#">이벤트</a></li>
+	          </ul>
+	        </nav>
+	        <div class="os-right">
+	          <a href="/search">
+	            <img src="/os_img/ico_head_search_000.svg" alt="검색" />
+	          </a>
+	          
+			  <a th:if="${session.osloginUser != null}" th:href="@{/os/mypage}">
+			      <img src="/os_img/ico_head_user_000.svg" alt="마이페이지">
+			  </a>
+			  <a th:if="${session.osloginUser == null}" th:href="@{/os/member/login}">
+			      <img src="/os_img/ico_head_user_000.svg" alt="로그인">
+			  </a>
+	          
+	          <a href="/os/cart">
+	            <img src="/os_img/ico_head_basket_000.svg" alt="장바구니" />
+	          </a>
+	       
+	        </div>
+	      </div>
+	    </div>
+	  </header>
+	  <div class="navsub first">
+	      <div class="nav-box">
+	        <ul>
+	          <li class="menu-title">티 제품</li>
+	          <li><a href="#">베스트</a></li>
+	          <li><a href="#">티 세트</a></li>
+	          <li><a href="#">녹차</a></li>
+	          <li><a href="#">발효차/홍차</a></li>
+	          <li><a href="#">블렌디드티</a></li>
+	          <li><a href="#">허브티</a></li>
+	          <li><a href="#">말차/밀크티/콤부차</a></li>
+	        </ul>
+	        <ul>
+	          <li class="menu-title">티푸드</li>
+	          <li><a href="#">과자/초콜릿</a></li>
+	          <li><a href="#">베이커리</a></li>
+	        </ul>
+	        <ul>
+	          <li class="menu-title">라이프스타일</li>
+	          <li><a href="#">티웨어</a></li>
+	          <li><a href="#">스킨케어</a></li>
+	          <li><a href="#">정기배송</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	    <div class="navsub second">
+	      <ul class="nav-box-brand">
+	        <li><a href="#">오설록 스토리</a></li>
+	        <li><a href="#">오설록 티라이프</a></li>
+	        <li><a href="#">제주 티뮤지엄</a></li>
+	        <li><a href="#">오설록 1979</a></li>
+	        <li><a href="#">매장소개 및 예약</a></li>
+	      </ul>
+	    </div>
+	    <div class="navsub third">
+	      <ul class="nav-box-brand">
+	        <li><a th:href="@{/notice/list}">공지사항</a></li>
+			<li th:if="${osloginUser != null and osloginUser.role == 'ROLE_ADMIN'}">
+			  <a th:href="@{/notice/ins}">공지 등록</a>
+			</li>
+	        <li><a th:href="@{/os/mypage}">마이페이지</a></li>
+	        <li><a th:href="@{/os/chat}">1:1 채팅</a></li>
+
+
+	      </ul>
+	    </div>
+	  </div>
+	 
+	   
+	</body>
+	</html>

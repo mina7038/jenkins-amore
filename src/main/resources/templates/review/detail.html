@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common/head :: head(title='리뷰 상세')}"></head>
+<body>
+<div th:replace="~{common/header}"></div>
+
+<div class="container" style="max-width: 1200px;">
+  <p style="margin-top:82px; text-align:center; margin-bottom:50px; font-size:49.5px;" class="title is-3">상품 후기</p>
+
+  <table class="table table-bordered" style="font-size:15px;">
+    <tr>
+      <th style="width: 15%;">제목</th>
+      <td th:text="${review.title}">리뷰 제목</td>
+    </tr>
+    <tr>
+      <th>작성자</th>
+      <td th:text="${#strings.substring(review.member.username, 0, 1) + '****'}">익명</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+
+        <p style="border-bottom:1px solid #eaeaea; margin:0; padding:10px;" th:text="'작성일 ' + ${#temporals.format(review.createdAt, 'yyyy-MM-dd')}">2025-07-04</p>
+        <div style="padding:20px; min-height:400px;">
+          <div class="text mb-2" th:if="${review.imagePath != null}">
+            <img th:src="@{/uploads/{img}(img=${review.imagePath})}" alt="리뷰 이미지" class="img-fluid" style="max-height: 500px;" />
+          </div>
+          <div class="" style="white-space: pre-wrap;" th:text="${review.content}">
+            리뷰 본문
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>첨부파일</th>
+      <td><a th:href="@{/uploads/{f}(f=${review.imagePath})}" th:text="${review.imagePath}" download></a></td>
+    </tr>
+  </table>
+
+  <!-- 버튼 -->
+  <div class="mt-4">
+    <a th:href="@{/reviews/all}" style="cursor:pointer; line-height: 50px; font-size: 18px; font-weight: 500; border-radius: 8px; width:150px; text-align:center; background-color:#000; color:#fff; display:block; height:54px;">목록으로</a>
+  </div>
+</div>
+
+<div th:replace="~{common/footer}"></div>
+</body>
+</html>

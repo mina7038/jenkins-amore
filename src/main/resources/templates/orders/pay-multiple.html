@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/head :: head(title='주문/결제')}"></head>
+<div th:replace="~{common/header}"></div>
+<section class="section">
+  <div class="container">
+    <h1 class="title is-3">🧾 주문/결제</h1>
+	<form th:action="@{/payment/ready/multiple}" method="post">
+	  <input type="hidden" name="cartIds" th:each="cart : ${cartItems}" th:value="${cart.id}" />
+
+	  <!-- 배송지 입력 -->
+	  <input name="receiver" placeholder="수령인" required>
+	  <input name="tel" placeholder="연락처" required>
+	  <input name="postCode" placeholder="우편번호" required>
+	  <input name="addr1" placeholder="주소1" required>
+	  <input name="addr2" placeholder="주소2">
+	  <input name="request" placeholder="요청사항">
+
+	  <button type="submit">결제하기</button>
+	</form>
+
+    
+  </div>
+</section>
+
+<html th:replace="~{common/footer}" />

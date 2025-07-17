@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>오설록 스타일 푸터</title>
+</head>
+
+<body>
+
+
+	<footer id="os-footer" th:fragment="footer">
+		<div class="footer-top">
+		  <div class="footerbox1">
+		    <img src="/os_img/logo_footer.webp" alt="오설록 로고">
+		  </div>
+		  <div class="footerbox2">
+		    <div class="footer-info">
+		      <div class="info-col">
+		        <h4>고객 상담 센터/주문 배송 문의</h4>
+		        <p>080-805-5555</p>
+		        <p>help@osulloc.com</p>
+		        <p>평일 09:00 - 18:00</p>
+		        <p>점심 (12:00 - 13:00)</p>
+		      </div>
+		      <div class="info-col">
+		        <h4>특판 및 대량구매</h4>
+		        <p>mall@osulloc.com</p>
+		        <p>카카오톡 ID : osullocmall</p>
+		        <p>평일 09:30 - 17:00</p>
+		        <p>점심 (11:30 - 13:00)</p>
+		      </div>
+		      <div class="info-col">
+		        <h4>회원 혜택</h4>
+		        <p>1:1 문의</p>
+		        <p>오설록 멤버십 혜택</p>
+		        <p>뷰티포인트 추후적립</p>
+		      </div>
+		      <div class="info-col">
+		        <h4>소셜미디어</h4>
+				<p><img src="/os_img/icon_kakao.webp" alt="카카오톡" class="sns-icon"> 카카오톡 플러스친구</p>
+				<p><img src="/os_img/icon_instagram.webp" alt="인스타그램" class="sns-icon"> 인스타그램</p>
+				<p><img src="/os_img/icon_ytube.webp" alt="유튜브" class="sns-icon"> 유튜브</p>
+				<p><img src="/os_img/icon_tiktok.webp" alt="틱톡" class="sns-icon"> 틱톡</p>
+				<p><img src="/os_img/icon_x.webp" alt="X" class="sns-icon"> X(구 트위터)</p>
+		      </div>
+		      <div class="info-col">
+		        <h4>LANGUAGE</h4>
+		        <p>KOREAN</p>
+		        <p>ENGLISH</p>
+		        <p>CHINESE(中文)</p>
+		      </div>
+		    </div>
+		    <div class="footer-notice">
+		      <h4>공지사항</h4>
+			  <ul>
+			    <li th:each="n : ${footerNotices}">
+			      <a th:href="@{|/notice/detail/${n.no}|}" th:text="${n.title}"></a>
+			    </li>
+			  </ul>
+		      <a th:href="@{/notice/list}">더 보기 &gt;</a>
+		    </div>
+		  </div>
+		</div>
+
+		<div class="footer-bottom">
+			<div class="bottom-left">
+				<ul class="bottom-list">
+					<li><a href="">회사소개</a></li>
+					<li>|</li>
+					<li><a href="">서비스 이용약관</a></li>
+					<li>|</li>
+					<li><a href=""><strong>개인정보 처리방침</strong></a></li> 
+					<li>|</li>
+					<li><a href="">영상정보 처리방침</a></li>
+					<li>|</li>
+					<li><a href="">임직원 할인</a></li>
+					<li>|</li>
+					<li><a href="">전자공고</a></li>
+
+
+				</ul>
+				<span class="bottom-adress"> (주)오설록
+
+					대표이사: 서혁제
+
+					주소: 제주특별자치도 서귀포시 안덕면 신화역사로 15 (오설록 티뮤지엄)
+
+					사업자등록번호: 390-87-01499
+
+					통신판매업신고번호: 2024-제주안덕-0075
+
+					호스팅제공자: (주)오설록
+
+					 <a href="#" class="business-link">사업자 정보 확인 &gt;</a> <br>(주)오설록은 오설록 브랜드를 제외한 입점 브랜드에 대해서는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 입점판매자가 등록한 상품정보 및
+					거래에 대해서는 책임을 지지 않습니다.</span>
+			</div>
+			<div class="escrow-box">
+			  <div class="escrow-content">
+			    <img src="/os_img/icon_escrow.webp" alt="에스크로 아이콘" class="escrow-img">
+			    <div class="escrow-text">
+			      <p><strong>NHN KCP 구매안전(에스크로)서비스</strong></p>
+			      <p>고객님의 안전거래를 위해 현금 등으로 결제 시<br>
+			         저희 쇼핑몰에 가입한 NHN KCP의<br>
+			         구매안전서비스를 이용하실 수 있습니다.
+			      </p>
+			    </div>
+			  </div>
+			</div>
+		</div>
+
+
+	</footer>
+	</div>
+</body>
+
+</html>

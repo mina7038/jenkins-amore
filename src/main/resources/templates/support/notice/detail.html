@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>공지사항</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_header.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_footer.css}">
+	<link rel="shortcut icon" type="image/x-icon" href="/ap_img/favicon.ico">
+	<style>
+		.tabs.is-toggle li.is-active a {
+			background-color:#fff;
+			border:0;
+			border-bottom:3px solid #000;
+			color:#000;
+			font-weight:bold;
+			border-radius:0;
+		}
+
+        .tabs.is-toggle a {
+            border:0;
+            border-radius:0;
+        }
+
+		.tabs.is-toggle li:last-child a, .tabs.is-toggle li:first-child a {
+			border-radius:0;
+		}
+
+		.table thead th {
+		    padding: 21px 10px !important;
+		}
+
+		.table tbody td, .table thead th {
+			border-width: 0 0 1px;
+		}
+
+		input:focus, input:hover {
+			box-shadow: none !important;
+			border-color: #dbdbdb !important; /* 기본 회색 테두리 */
+		  }
+
+		.field.has-addons .control:not(:last-child) {
+			margin-right: 0px;
+		}
+		.box {
+            border-radius:0 !important;
+        }
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="common/header :: header"></th:block>
+
+	<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; border-bottom:1px solid #dbdbdb; margin-top:82px;" class="box has-text-centered">
+		<p style="margin-bottom:50px; font-size:49.5px; text-align:center;" class="title is-3">공지사항</p>
+		<div class="container tabs is-toggle is-fullwidth is-centered">
+			<ul style="font-size:20px;">
+				<li><a th:href="@{/support/list}">고객센터</a></li>
+				<li class="is-active"><a th:href="@{/support/notice/list}">공지사항</a></li>
+				<li><a th:href="@{/support/faq/form}">Q&A</a></li>
+				<li><a th:href="@{/support/chat}">1:1채팅</a></li>
+			</ul>
+		</div>
+	</div>
+	<section class="section">
+		<div class="box" style="max-width:1200px; margin:0 auto; box-shadow:none; padding:0;">
+			<table class="table is-fullwidth" style="border-top:1px solid #000;">
+				<tbody>
+					<tr>
+						<td colspan="2">
+							<div style="font-size:27px;" th:text="${notice.title}">공지사항 제목</div>
+							<div style="margin-top:5px; padding-bottom:5px; font-size:15px; color:#00000080;"><span>작성일</span><span th:text="${#temporals.format(notice.resdate, 'yyyy-MM-dd')}">작성일</span></div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="padding:20px 0;">
+							<div style="min-height:400px; padding:10px; white-space:pre-wrap;" th:utext="${notice.content}">
+								공지사항 본문 내용이 여기에 표시됩니다.
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="has-text-left">
+				<a th:href="@{/support/notice/list}" style="cursor:pointer; line-height: 50px; font-size: 18px; font-weight: 500; border-radius: 8px; width:150px; text-align:center; background-color:#000; color:#fff; display:block; height:54px;">목록으로</a>
+			</div>
+		</div>
+	</section>
+	<th:block th:replace="common/footer :: footer"></th:block>
+</body>
+
+</html>

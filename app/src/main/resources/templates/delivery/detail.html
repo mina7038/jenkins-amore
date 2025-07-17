@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common/head :: head(title='배송 상세')}"></head>
+<div th:replace="~{common/header}"></div>
+
+<section class="section">
+	<div class="container">
+		<h1 class="title is-3">🔍 배송 상세정보</h1>
+
+		<div class="box">
+			<p><strong>배송번호:</strong> <span th:text="${delivery.id}">1</span></p>
+			<p><strong>주문번호:</strong> <span th:text="${delivery.orderId}">ORD20250001</span></p>
+			<p><strong>상품명:</strong> <span th:text="${delivery.payment.goods.gname}">상품명</span></p>
+			<p><strong>수령인:</strong> <span th:text="${delivery.receiver}">홍길동</span></p>
+			<p><strong>전화번호:</strong> <span th:text="${delivery.tel}">010-1234-5678</span></p>
+			<p><strong>주소:</strong> <span th:text="|${delivery.addr1} ${delivery.addr2}|"></span></p>
+			<p><strong>요청사항:</strong> <span th:text="${delivery.request}">문 앞에 두세요</span></p>
+			<p><strong>배송상태:</strong> <span class="tag is-info" th:text="${delivery.status}">배송준비</span></p>
+		</div>
+
+		<a href="/delivery/list" class="button is-light">목록으로</a>
+	</div>
+</section>
+
+<html th:replace="~{common/footer}" />

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common/head :: head(title='로그인')}"></head>
+
+<body>
+<style>
+	.snap-sync-line.vertical {
+        height: auto;
+        border-right: 0.5px solid #EBEBEB;
+        border-left: 0.5px solid #EBEBEB;
+        position: relative;
+    }
+
+    .middleor {
+    	display:none;
+    }
+
+	@media(max-width:767px) {
+		.column.is-half {
+			padding:10px !important;
+		}
+
+		.login-logo {
+			margin-bottom:50px !important;
+		}
+
+		.column.is-half.defalut {
+			margin-top:30px !important;
+		}
+
+		.middleor {
+    		display:block;
+    		margin-top:20px !important;
+    	}
+
+    	.or {
+    		display:none;
+    	}
+	}
+</style>
+	<section class="section" style="padding:0;">
+		<div class="container" style="max-width:862px;">
+			<div class="login-logo" style="text-align:center; border-bottom: 1px solid #f1f1f1; padding:20px; margin-bottom:100px;">
+				<a href="/">
+					<img style="width:200px;" src="/ap_img/login-logo.png" alt="logo">
+				</a>
+			</div>
+			<div class="columns" style="margin:0;">
+				<!-- 왼쪽 : 간편 로그인 -->
+				<div class="column is-half" style="padding:80px 80px 80px 0;">
+					<div style="box-shadow:none; padding:0;" class="box">
+						<h2 class="title is-4 has-text-weight-bold" style="border-bottom:1px solid #f1f1f1; padding-bottom:20px;">간편하게 로그인하기</h2>
+						<p class="mb-4">귀찮은 입력 없이<br>카카오로 쉽고 빠르게 로그인해 보세요.</p>
+						<a href="/oauth2/authorization/kakao"
+						   class="button is-fullwidth"
+						   style="background-color: #FEE500; color: #000; padding:15px; height:48px; border:0; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+    <span class="icon">
+        <img th:src="@{/images/kakao.png}" alt="카카오" style="width: 15px;">
+    </span>
+							<span style="font-size:13px; font-weight:bold; margin-left: 8px;">
+        카카오로 원터치 로그인/회원가입
+    </span>
+						</a>
+					</div>
+				</div>
+				<div class="snap-sync-line vertical"></div>
+				<div class="has-text-centered mt-2 middleor">
+					<span class="has-text-grey-light has-text-weight-bold is-size-7">OR</span>
+				</div>
+
+				<!-- 오른쪽 : 일반 로그인 -->
+				<div class="column is-half defalut" style="padding:80px 0 80px 80px;">
+					<div class="box" style="box-shadow:none; padding:0;">
+						<div class="is-flex is-justify-content-space-between mb-4">
+							<h2 class="title is-4 has-text-weight-bold" style="border-bottom:1px solid #f1f1f1; padding-bottom:20px; width:100%;">일반회원 로그인</h2>
+						</div>
+
+						<form th:action="@{/member/login}" method="post">
+							<div class="field">
+								<input class="input" type="text" name="username" placeholder="아이디를 입력해주세요." required>
+							</div>
+							<div class="field">
+								<input class="input" type="password" name="password" placeholder="비밀번호를 입력해주세요."
+									required>
+							</div>
+							<div class="field is-flex is-align-items-center mb-4">
+								<input type="checkbox" id="remember" class="mr-2">
+								<label for="remember" class="is-size-7">아이디 저장</label>
+							</div>
+							<button class="button is-black is-fullwidth has-text-weight-bold" type="submit">로그인</button>
+						</form>
+
+						<div class="has-text-centered is-size-7 mt-3 mb-5">
+							<a href="#">아이디 찾기</a> |
+							<a href="#">비밀번호 찾기</a>
+						</div>
+
+
+						<div class="has-text-centered">
+							<a th:href="@{/member/join/step1}" class="button is-light is-fullwidth">일반회원가입</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- OR 텍스트 -->
+			<div class="has-text-centered mt-2 or">
+				<span class="has-text-grey-light has-text-weight-bold is-size-7">OR</span>
+			</div>
+		</div>
+	</section>
+<script>
+	// 쿠키에서 username 값을 불러오기
+    window.addEventListener("DOMContentLoaded", function () {
+      const savedUsername = getCookie("savedUsername");
+      if (savedUsername) {
+        document.querySelector('input[name="username"]').value = savedUsername;
+        document.getElementById("remember").checked = true;
+      }
+    });
+
+    // 로그인 폼 제출 시 쿠키 저장 여부 결정
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector('form');
+      form.addEventListener("submit", function () {
+        const remember = document.getElementById("remember").checked;
+        const username = document.querySelector('input[name="username"]').value;
+        if (remember) {
+          setCookie("savedUsername", username, 30); // 30일 저장
+        } else {
+          deleteCookie("savedUsername");
+        }
+      });
+    });
+
+    // 쿠키 관련 함수
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+    }
+
+    function getCookie(name) {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        const [key, val] = cookie.trim().split('=');
+        if (key === name) return val;
+      }
+      return null;
+    }
+
+    function deleteCookie(name) {
+      document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+    }
+</script>
+</body>
+
+</html>

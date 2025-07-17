@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Q&A 목록</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_header.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/ap_css/ap_footer.css}">
+	<style>
+		.tabs.is-toggle li.is-active a {
+			background-color:#fff;
+			border:0;
+			border-bottom:3px solid #000;
+			color:#000;
+			font-weight:bold;
+			border-radius:0;
+		}
+
+        .tabs.is-toggle a {
+            border:0;
+            border-radius:0;
+        }
+
+		.tabs.is-toggle li:last-child a, .tabs.is-toggle li:first-child a {
+			border-radius:0;
+		}
+
+		.table thead th {
+		    padding: 21px 10px !important;
+		}
+
+		.table tbody td, .table thead th {
+			border-width: 0 0 1px;
+		}
+
+		.write-btn:after {
+			display: block;
+			content: "";
+			clear: both;
+		}
+
+		.qna_intro_txt .qna_intro_txt_desc li {
+            font-size: 16px;
+            line-height: 2.25;
+            letter-spacing: -0.8px;
+            color: #111;
+            position: relative;
+        }
+
+        .qna_intro_txt .qna_intro_txt_desc li::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #000;
+        }
+
+        #board_category {
+            border: solid 1px #ededed;
+            height: 60px;
+            border-radius: 8px;
+            margin-right: 10px;
+            padding: 0 10px;
+            font-size: 16px;
+            color: #000;
+            width: 150px;
+        }
+
+		select {
+            cursor: pointer;
+            font-weight:600;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url(/ap_img/icon_arrow_down_qna.png) no-repeat 86% 50%;
+        }
+
+        .box {
+            border-radius:0 !important;
+        }
+
+		@media (max-width:700px) {
+            .qna_intro_txt .qna_intro_txt_desc li {
+                font-size:13px;
+            }
+            .qna_intro_txt_desc {
+                padding:30px !important;
+            }
+        }
+	</style>
+</head>
+
+<body>
+	<th:block th:replace="common/header :: header"></th:block>
+	<div style="width:100%; box-shadow:none; margin-bottom:0; padding:0; border-bottom:1px solid #dbdbdb; margin-top:82px;"
+		 class="box has-text-centered">
+		<p style="margin-bottom:50px; font-size:49.5px;" class="title is-3">Q&A</p>
+		<div class="container tabs is-toggle is-fullwidth is-centered">
+			<ul style="font-size:20px;">
+				<li><a th:href="@{/support/list}">고객센터</a></li>
+				<li><a th:href="@{/support/notice/list}">공지사항</a></li>
+				<li class="is-active"><a th:href="@{/support/qna/form}">Q&A</a></li>
+				<li><a th:href="@{/support/chat}">1:1채팅</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="qna_intro_txt service_center_inner" style="max-width: 1380px; margin: 0 auto; margin-top:60px;">
+		<ul class="qna_intro_txt_desc" style="border-radius: 8px; background: #f8f8f8; padding: 50px 74px; margin-bottom: 65px;">
+			<li>문의하신 내용은 마이페이지 &gt; 1:1 문의내역 을 통해 답변내용을 확인하실 수 있습니다.</li>
+		</ul>
+	</div>
+	<section class="section" style="padding:0;">
+		<div class="container" style="max-width:1380px;">
+			<div style="margin-bottom:10px;">
+				<select id="board_category" onchange="location.href=this.value" style="border:1px solid #dbdbdb; padding:5px; border-radius:4px; margin-right:10px;">
+					<option th:value="@{/support/qna/list(category='상품문의')}"
+									th:selected="${selectedCategory == '상품문의'}">상품문의</option>
+					<option th:value="@{/support/qna/list(category='쿠폰/포인트')}"
+									th:selected="${selectedCategory == '쿠폰/포인트'}">쿠폰/포인트</option>
+					<option th:value="@{/support/qna/list(category='주문/결제')}"
+									th:selected="${selectedCategory == '주문/결제'}">주문/결제</option>
+					<option th:value="@{/support/qna/list(category='배송문의')}"
+									th:selected="${selectedCategory == '배송문의'}">배송문의</option>
+				</select>
+			</div>
+
+
+			<table class="table is-fullwidth" style="border-top:1px solid #000;">
+				<thead>
+				<tr>
+					<th style="text-align:center;">카테고리</th>
+					<th style="text-align:center;">질문</th>
+					<th style="text-align:center;">작성일</th>
+					<th style="text-align:center;">답변</th>
+				</tr>
+				</thead>
+				<tbody>
+				<!-- 글이 있을 때 -->
+				<tr th:each="qna : ${qnas}" th:if="${qnas.size() > 0}" style="border-bottom:1px solid #dbdbdb;">
+					<td style="text-align:center; padding:21px;" th:text="${qna.category}">카테고리</td>
+					<td style="text-align:left; padding:21px;">
+						<a th:href="@{/support/qna/{id}(id=${qna.id})}" th:text="${qna.title}">제목</a>
+					</td>
+					<td style="text-align:center; padding:21px;" th:text="${#temporals.format(qna.resdate, 'yyyy-MM-dd')}">작성일</td>
+					<td style="text-align:center; padding:21px;">
+						<span th:text="${qna.answer != null && qna.answer != '' ? '완료' : '대기'}"></span>
+					</td>
+				</tr>
+
+				<!-- 글이 없을 때 -->
+				<tr style="border:0;" th:if="${#lists.isEmpty(qnas)}">
+					<td colspan="4" style="border:0; text-align:center; font-size:14px; color:#757575; padding:40px;">검색결과가 없습니다.</td>
+				</tr>
+				</tbody>
+			</table>
+			<div class="write-btn" style="margin-top:50px;">
+				<div style="float: right;">
+					<a style="line-height: 50px; font-size: 18px; font-weight: 500; border-radius: 8px; width:150px; text-align:center; background-color:#000; color:#fff; display:block; height:54px;" th:href="@{/support/qna/form}">글쓰기</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<th:block th:replace="common/footer :: footer"></th:block>
+</body>
+
+</html>

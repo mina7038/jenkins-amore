@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Page Title</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/il_footer.css}">
+</head>
+
+<body>
+	<footer id="il_footer" class="il_footer" th:fragment="il_footer">
+		<div id="right_quick" style="bottom: 30px;">
+			<div><a href="#" title="맨 위로 이동하기"><img src="/il_img/r_quick_top.svg" alt="맨 위로 이동 버튼 이미지" loading="lazy"
+						ez-prevent="img"></a>
+			</div>
+		</div>
+		<div class="footer_inner">
+			<div class="footer_logo" style="cursor:pointer;">
+				<a href="/il">
+					<img src="/il_img/illiyoon-logo-w.svg" alt="일리윤로고">
+				</a>
+			</div>
+			<div class="footer_content">
+				<div class="info_wrap">
+					<ul class="list">
+						<li><a href="#">이용약관</a></li>
+						<li><a href="#">개인정보처리방침</a></li>
+						<li><a href="#">고객센터</a></li>
+					</ul>
+
+					<div class="info">
+						<ul>
+							<li>(주)아모레퍼시픽</li>
+							<li class="il_line">|</li>
+							<li>04386 서울특별시 용산구 한강대로 100 아모레퍼시픽</li>
+						</ul>
+						<ul>
+							<li>illiyoonmall_official@amorepacific.com</li>
+							<li class="il_line">|</li>
+							<li>080-848-1212(쇼핑문의)</li>
+							<li class="il_line">|</li>
+							<li>080-023-5454 (제품문의)</li>
+						</ul>
+						<ul>
+							<li>대표이사 : 김승환, 서경배</li>
+							<li class="il_line">|</li>
+							<li>사업자 등록번호 : 106-86-43373</li>
+							<li class="il_line">|</li>
+							<li>통신판매업 신고번호 : 2017-서울용산-1308 </li>
+							<li><a href="#">[사업자정보확인]</a></li>
+						</ul>
+						<ul>
+							<li>호스팅제공자 : (주)카페24</li>
+						</ul>
+					</div>
+				</div>
+				<div class="app-area">
+					<div class="txt-wrap">
+						<strong>일리윤 공식몰 앱 다운로드</strong>
+						<p>일리윤 공식몰 앱, 지금 다운로드하세요! <br> 편리한 쇼핑과 풍성한 혜택이 기다리고 있어요.</p>
+					</div>
+					<div class="qr-img">
+						<img src="/il_img/illiyoon-qrcode.png" alt="일리윤 앱 다운로드 QR 이미지" loading="lazy" ez-prevent="img">
+						&nbsp;
+					</div>
+					<div class="download-btn">
+						<a href="#none"><span>APP 다운로드</span></a>
+					</div>
+				</div>
+			</div>
+			<div class="bt_copyright">
+				Copyright © AMOREPACIFIC CORPORATION. ALL RIGHTS RESERVED.
+			</div>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(function () {
+			const $quick = $('#right_quick');
+			const $footer = $('#il_footer');
+
+			function updateQuickPosition() {
+				const scrollTop = $(window).scrollTop();
+				const windowHeight = $(window).height();
+				const quickHeight = $quick.outerHeight();
+				const footerTop = $footer.offset().top;
+
+				const quickBottom = scrollTop + windowHeight - quickHeight;
+
+				if (quickBottom >= footerTop) {
+					const overlap = quickBottom - footerTop + 20;
+					$quick.css({
+						position: 'absolute',
+						bottom: overlap + 'px'
+					});
+				} else {
+					$quick.css({
+						position: 'fixed',
+						bottom: '50px'
+					});
+				}
+			}
+
+			$(window).on('scroll resize', updateQuickPosition);
+			updateQuickPosition(); // 초기 실행
+		});
+	</script>
+
+
+
+
+
+
+</body>
+
+</html>
