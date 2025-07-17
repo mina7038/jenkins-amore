@@ -42,18 +42,20 @@ pipeline {
         stage('Deploy to AWS EC2') {
             steps {
                 withCredentials([string(credentialsId: 'OPEN_API_KEY', variable: 'OPEN_API_KEY')]) {
+                    script {
+                        writeFile file: '.env', text: """
+        DB_HOST=localhost
+        DB_NAME=myapp
+        DB_USER=jenkins
+        DB_PASS=jenkins123
+        UPLOAD_PATH=/home/ec2-user/uploads
+        KAKAO_ADMIN_KEY=692a07ef5c27d034300190c55044f4ea
+        KAKAO_CLIENT_ID=a7e706b35a2aa6ca3bb74475951f6ec0
+        KAKAO_CLIENT_SECRET=TSCBuRtcqv4qteS35sAjTeE8Cv8rzFmx
+        OPEN_API_KEY=${env.OPEN_API_KEY}
+        """
+                    }
                     bat """
-                        echo Step 1: Create .env file
-                        echo DB_HOST=localhost > .env
-                        echo DB_NAME=myapp >> .env
-                        echo DB_USER=jenkins >> .env
-                        echo DB_PASS=jenkins123 >> .env
-                        echo UPLOAD_PATH=/home/ec2-user/uploads >> .env
-                        echo KAKAO_ADMIN_KEY=692a07ef5c27d034300190c55044f4ea >> .env
-                        echo KAKAO_CLIENT_ID=a7e706b35a2aa6ca3bb74475951f6ec0 >> .env
-                        echo KAKAO_CLIENT_SECRET=TSCBuRtcqv4qteS35sAjTeE8Cv8rzFmx >> .env
-                        echo OPEN_API_KEY=$OPEN_API_KEY >> .env
-
                         echo Step 2: Send .env to EC2
                         scp -i C:/Users/jenkins/.ssh/jenkins.pem -o StrictHostKeyChecking=no .env ec2-user@54.180.247.132:/home/ec2-user/
 
@@ -69,6 +71,7 @@ pipeline {
                 }
             }
         }
+
 
 
     }
