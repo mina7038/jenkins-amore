@@ -41,38 +41,35 @@ pipeline {
 
         stage('Deploy to AWS EC2') {
             steps {
-                bat """
-                echo "📝 1. .env 파일 생성"
-                echo DB_HOST=${DB_HOST} > .env
-                echo DB_NAME=${DB_NAME} >> .env
-                echo DB_USER=${DB_USER} >> .env
-                echo DB_PASS=${DB_PASS} >> .env
-                echo UPLOAD_PATH=${UPLOAD_PATH} >> .env
-                echo KAKAO_ADMIN_KEY=${KAKAO_ADMIN_KEY} >> .env
-                echo KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID} >> .env
-                echo KAKAO_CLIENT_SECRET=${KAKAO_CLIENT_SECRET} >> .env
-                echo OPEN_API_KEY=%OPEN_API_KEY% >> .env
+                withCredentials([string(credentialsId: 'OPEN_API_KEY', variable: 'OPEN_API_KEY')]) {
+                    bat """
+                        echo Step 1: Create .env file
+                        echo DB_HOST=localhost > .env
+                        echo DB_NAME=myapp >> .env
+                        echo DB_USER=jenkins >> .env
+                        echo DB_PASS=jenkins123 >> .env
+                        echo UPLOAD_PATH=/home/ec2-user/uploads >> .env
+                        echo KAKAO_ADMIN_KEY=692a07ef5c27d034300190c55044f4ea >> .env
+                        echo KAKAO_CLIENT_ID=a7e706b35a2aa6ca3bb74475951f6ec0 >> .env
+                        echo KAKAO_CLIENT_SECRET=TSCBuRtcqv4qteS35sAjTeE8Cv8rzFmx >> .env
+                        echo OPEN_API_KEY=$OPEN_API_KEY >> .env
 
-                echo "📤 2. .env 파일 EC2로 전송"
-                scp -i ~/.ssh/jenkins.pem -o StrictHostKeyChecking=no .env ec2-user@54.180.247.132:/home/ec2-user/
+                        echo Step 2: Send .env to EC2
+                        scp -i C:/Users/jenkins/.ssh/jenkins.pem -o StrictHostKeyChecking=no .env ec2-user@54.180.247.132:/home/ec2-user/
 
-                echo "🚀 3. JAR 파일 전송"
-                scp -i ~/.ssh/jenkins.pem -o StrictHostKeyChecking=no build/libs/app-0.0.1-SNAPSHOT.jar ec2-user@54.180.247.132:/home/ec2-user/
+                        echo Step 3: Send JAR to EC2
+                        scp -i C:/Users/jenkins/.ssh/jenkins.pem -o StrictHostKeyChecking=no build/libs/app-0.0.1-SNAPSHOT.jar ec2-user@54.180.247.132:/home/ec2-user/
 
-                echo "🔁 4. EC2에서 앱 재시작"
-                ssh -i ~/.ssh/jenkins.pem -o StrictHostKeyChecking=no ec2-user@54.180.247.132 << EOF
-                    pkill -f app-0.0.1-SNAPSHOT.jar || true
-
-                    # 환경변수 로드
-                    set -a
-                    source /home/ec2-user/.env
-                    set +a
-
-                    nohup java -jar app-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
-                EOF
-                """
-
+                        echo Step 4: Restart app on EC2
+                        ssh -i C:/Users/jenkins/.ssh/jenkins.pem -o StrictHostKeyChecking=no ec2-user@54.180.247.132 ^
+                        "pkill -f app-0.0.1-SNAPSHOT.jar || true & ^
+                        set -a & source /home/ec2-user/.env & set +a & ^
+                        nohup java -jar app-0.0.1-SNAPSHOT.jar > app.log 2>&1 &"
+                    """
+                }
             }
         }
+
+
     }
 }
