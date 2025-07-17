@@ -51,7 +51,7 @@ pipeline {
                 echo KAKAO_ADMIN_KEY=${KAKAO_ADMIN_KEY} >> .env
                 echo KAKAO_CLIENT_ID=${KAKAO_CLIENT_ID} >> .env
                 echo KAKAO_CLIENT_SECRET=${KAKAO_CLIENT_SECRET} >> .env
-                echo OPEN_API_KEY=${OPEN_API_KEY} >> .env
+                echo OPEN_API_KEY=%OPEN_API_KEY% >> .env
 
                 echo "📤 2. .env 파일 EC2로 전송"
                 scp -i ~/.ssh/jenkins.pem -o StrictHostKeyChecking=no .env ec2-user@54.180.247.132:/home/ec2-user/
