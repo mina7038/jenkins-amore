@@ -10,7 +10,7 @@ pipeline {
         KAKAO_ADMIN_KEY = '692a07ef5c27d034300190c55044f4ea'
         KAKAO_CLIENT_ID = 'a7e706b35a2aa6ca3bb74475951f6ec0'
         KAKAO_CLIENT_SECRET = 'TSCBuRtcqv4qteS35sAjTeE8Cv8rzFmx'
-        OPEN_API_KEY = credentials('OPENAI_KEY')
+        OPEN_API_KEY = credentials('OPEN_API_KEY')
     }
 
     tools {
