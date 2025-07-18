@@ -69,12 +69,16 @@ public class OrderController {
 
 		Order order = orderService.getOrderById(id);
 
-		// 주문한 사용자인지 검증 (보안)
-		if (!order.getUser().getId().equals(userDetails.getMember().getId())) {
-			return "redirect:/orders/mypage"; // 본인 주문이 아니면 접근 차단
+		// ✅ 관리자이거나 본인 주문이면 접근 허용
+		boolean isAdmin = userDetails.getMember().getRole().equals("ROLE_ADMIN");
+		boolean isOwner = order.getUser().getId().equals(userDetails.getMember().getId());
+
+		if (!isAdmin && !isOwner) {
+			return "redirect:/orders/mypage"; // 관리자도 아니고 본인도 아니면 차단
 		}
 
 		model.addAttribute("order", order);
-		return "mypage/order-detail"; // 템플릿 경로
+		return "mypage/order-detail"; // 또는 관리자용 템플릿이 있다면 분기 처리도 가능
 	}
+
 }
