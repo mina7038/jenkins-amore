@@ -108,14 +108,14 @@
 				</div>
 
 				<!-- 답변이 있을 때: 수정/삭제 버튼 -->
-				<div th:if="${qna.answer != null}" style="margin-top: 20px; padding: 0 18px;">
+				<div th:if="${qna.answer != null}" style="margin-top: 20px;">
 					<form th:action="@{'/support/qna/' + ${qna.id} + '/delete-answer'}" method="post" style="display:inline;">
-						<button type="submit" class="btn btn-outline-danger ms-2" onclick="return confirm('정말 삭제하시겠습니까?')">답변 삭제</button>
+						<button type="submit" class="btn btn-outline-danger is-small" onclick="return confirm('정말 삭제하시겠습니까?')">답변 삭제</button>
 					</form>
 				</div>
 			</div>
 			<div class="has-text-left" style="margin-top:30px;">
-				<a th:href="@{/support/qna/list}" style="cursor:pointer; line-height: 50px; font-size: 18px; font-weight: 500; border-radius: 8px; width:150px; text-align:center; background-color:#000; color:#fff; display:block; height:54px;">목록으로</a>
+				<a href="javascript:history.back()" style="cursor:pointer; line-height: 50px; font-size: 18px; font-weight: 500; border-radius: 8px; width:150px; text-align:center; background-color:#000; color:#fff; display:block; height:54px;">목록으로</a>
 			</div>
 		</div>
 	</section>
