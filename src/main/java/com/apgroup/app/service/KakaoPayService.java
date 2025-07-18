@@ -5,6 +5,8 @@ import com.apgroup.app.entity.Order;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class KakaoPayService {
     private String failUrl;
 
     private final OkHttpClient client = new OkHttpClient();
+    private static final Logger log = LoggerFactory.getLogger(KakaoPayService.class);
 
     public KakaoPayResponseDto requestPayment(Order order) {
         try {
@@ -45,14 +48,14 @@ public class KakaoPayService {
                     .add("cancel_url", cancelUrl + "?orderId=" + order.getOrderId())
                     .add("fail_url", failUrl + "?orderId=" + order.getOrderId())
                     .build();
-            
-            System.out.println("📦 결제 요청 준비 중:");
-            System.out.println("→ orderId: " + order.getOrderId());
-            System.out.println("→ userId: " + order.getUser().getId());
-            System.out.println("→ orderName: " + order.getOrderName());
-            System.out.println("→ quantity: " + order.getQuantity());
-            System.out.println("→ amount: " + order.getTotalAmount());
 
+            // ✅ 로그 출력 (stdout X → Logger 사용)
+            log.info("📦 카카오페이 결제 요청 준비 중...");
+            log.info("→ orderId: {}", order.getOrderId());
+            log.info("→ userId: {}", order.getUser().getId());
+            log.info("→ orderName: {}", order.getOrderName());
+            log.info("→ quantity: {}", order.getQuantity());
+            log.info("→ amount: {}", order.getTotalAmount());
 
             Request request = new Request.Builder()
                     .url("https://kapi.kakao.com/v1/payment/ready")
@@ -62,12 +65,18 @@ public class KakaoPayService {
                     .build();
 
             Response response = client.newCall(request).execute();
+
             if (!response.isSuccessful()) {
+                String errorBody = response.body() != null ? response.body().string() : "empty";
+                log.error("❌ KakaoPay API 요청 실패: {}", response);
+                log.error("❌ KakaoPay 응답 본문: {}", errorBody); // ✅ 서버 로그에 꼭 출력
                 throw new IOException("KakaoPay API 요청 실패: " + response);
             }
 
             String responseBody = response.body().string();
             JSONObject json = new JSONObject(responseBody);
+
+            log.info("✅ KakaoPay 응답 수신 완료. redirectUrl: {}", json.getString("next_redirect_pc_url"));
 
             return KakaoPayResponseDto.builder()
                     .tid(json.getString("tid"))
@@ -75,6 +84,7 @@ public class KakaoPayService {
                     .build();
 
         } catch (IOException e) {
+            log.error("❌ KakaoPay 요청 실패", e); // ✅ 예외 전체 로그 출력
             throw new RuntimeException("KakaoPay 요청 실패", e);
         }
     }
