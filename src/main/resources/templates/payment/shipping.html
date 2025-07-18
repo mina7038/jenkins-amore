@@ -39,8 +39,9 @@
 							  name="fullAddress"
 							  readonly
 							  style="border:0; width:100%; padding:0;"
-							  th:value="${defaultPostcode} + ' ' + ${defaultAddr1} + ' ' + ${defaultAddr2}"
+							  th:value="${defaultPostcode ?: ''} + ' ' + ${defaultAddr1 ?: ''} + ' ' + ${defaultAddr2 ?: ''}"
 					  />
+
 				  </td>
 			  </tr>
 			  </tbody>
