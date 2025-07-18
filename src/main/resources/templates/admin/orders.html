@@ -86,7 +86,7 @@
             <td style="vertical-align:middle;" th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd')}">2025-07-08</td>
             <td style="vertical-align:middle;" th:text="${order.status}">PAID</td>
             <td style="vertical-align:middle;">
-                <a class="btn btn-sm btn-outline-secondary" th:href="@{'/admin/orders/view/' + ${order.id}}">상세</a>
+                <a class="btn btn-sm btn-outline-secondary" th:href="@{/orders/detail/{id}(id=${order.id})}">상세</a>
             </td>
         </tr>
         </tbody>
