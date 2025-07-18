@@ -139,6 +139,7 @@
 					<th style="text-align:center;">질문</th>
 					<th style="text-align:center;">작성일</th>
 					<th style="text-align:center;">답변</th>
+					<th style="text-align:center;">관리</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -151,6 +152,9 @@
 					<td style="text-align:center; padding:21px;" th:text="${#temporals.format(qna.resdate, 'yyyy-MM-dd')}">작성일</td>
 					<td style="text-align:center; padding:21px;">
 						<span th:text="${qna.answer != null && qna.answer != '' ? '완료' : '대기'}"></span>
+					</td>
+					<td style="text-align:center; padding:21px;">
+						<a th:href="@{/qna/edit/{id}(id=${qna.id})}" class="button is-primary is-small">수정</a>
 					</td>
 				</tr>
 
