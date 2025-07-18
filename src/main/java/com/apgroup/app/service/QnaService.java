@@ -43,10 +43,12 @@ public class QnaService {
     public Qna update(Long id, Qna newqna) {
         Qna origin = getById(id);
         origin.setCategory(newqna.getCategory());
+        origin.setTitle(newqna.getTitle()); // ✅ 이 줄을 추가하세요!
         origin.setQuestion(newqna.getQuestion());
         origin.setAnswer(newqna.getAnswer());
         return qnaRepository.save(origin);
     }
+
 
     public List<Qna> getTopFaqs(int count) {
         return qnaRepository.findTop4ByOrderByResdateDesc();

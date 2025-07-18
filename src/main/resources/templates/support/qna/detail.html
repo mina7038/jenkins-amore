@@ -109,7 +109,6 @@
 
 				<!-- 답변이 있을 때: 수정/삭제 버튼 -->
 				<div th:if="${qna.answer != null}" style="margin-top: 20px; padding: 0 18px;">
-					<a th:href="@{'/support/qna/edit/' + ${qna.id}}" class="btn btn-outline-primary">답변 수정</a>
 					<form th:action="@{'/support/qna/' + ${qna.id} + '/delete-answer'}" method="post" style="display:inline;">
 						<button type="submit" class="btn btn-outline-danger ms-2" onclick="return confirm('정말 삭제하시겠습니까?')">답변 삭제</button>
 					</form>
