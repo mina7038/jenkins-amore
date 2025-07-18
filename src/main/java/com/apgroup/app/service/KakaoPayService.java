@@ -57,6 +57,13 @@ public class KakaoPayService {
             log.info("→ quantity: {}", order.getQuantity());
             log.info("→ amount: {}", order.getTotalAmount());
 
+            System.out.println("📦 결제 요청 준비 중:");
+            System.out.println("→ orderId: " + order.getOrderId());
+            System.out.println("→ userId: " + order.getUser().getId());
+            System.out.println("→ orderName: " + order.getOrderName());
+            System.out.println("→ quantity: " + order.getQuantity());
+            System.out.println("→ amount: " + order.getTotalAmount());
+
             Request request = new Request.Builder()
                     .url("https://kapi.kakao.com/v1/payment/ready")
                     .post(formBody)
